@@ -32,8 +32,15 @@
                 <label for="receipt-image">Upload Receipt Image:</label>
                 <input type="file" id="receipt-image" accept="image/*">
                 
+                <button type="button" id="extract-data">Extract</button>
                 <button type="button" id="generate-invoice">Generate Invoice</button>
             </form>
+        </section>
+        <section>
+            <h2>Extracted Data</h2>
+            <div id="extracted-data">
+                <!-- Extracted data from the image will be displayed here -->
+            </div>
         </section>
         <section>
             <h2>Generated Invoice</h2>
@@ -46,6 +53,5 @@
         <p>&copy; 2025 Invoice Generator</p>
     </footer>
     <script src="script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.1/dist/tesseract.min.js"></script>
 </body>
-</html
+</html>

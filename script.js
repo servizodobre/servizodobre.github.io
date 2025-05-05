@@ -1,6 +1,38 @@
 // Import Tesseract.js (ensure you include it in your project)
 import Tesseract from 'tesseract.js';
 
+// Handle receipt image upload and OCR
+document.getElementById('extract-data').addEventListener('click', function () {
+    const fileInput = document.getElementById('receipt-image');
+    const file = fileInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            Tesseract.recognize(
+                reader.result, // Image data
+                'eng', // Language
+                {
+                    logger: info => console.log(info) // Log progress
+                }
+            ).then(({ data: { text } }) => {
+                console.log('Extracted Text:', text);
+
+                // Display the extracted text on the web page
+                const extractedDataDiv = document.getElementById('extracted-data');
+                extractedDataDiv.innerHTML = `<pre>${text}</pre>`;
+            }).catch(error => {
+                console.error('OCR Error:', error);
+                alert('Failed to extract text from the image.');
+            });
+        };
+        reader.readAsDataURL(file);
+    } else {
+        alert('Please upload a receipt image first.');
+    }
+});
+
+// Generate invoice functionality
 document.getElementById('generate-invoice').addEventListener('click', function () {
     // Get form values
     const clientName = document.getElementById('client-name').value;
@@ -26,28 +58,4 @@ document.getElementById('generate-invoice').addEventListener('click', function (
     // Display the invoice
     const invoiceOutput = document.getElementById('invoice-output');
     invoiceOutput.innerHTML = invoiceHTML;
-});
-
-// Handle receipt image upload and OCR
-document.getElementById('receipt-image').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function () {
-            Tesseract.recognize(
-                reader.result, // Image data
-                'eng', // Language
-                {
-                    logger: info => console.log(info) // Log progress
-                }
-            ).then(({ data: { text } }) => {
-                console.log('Extracted Text:', text);
-                alert('Extracted Text: ' + text); // Display extracted text
-                // You can parse the text and populate the form fields here
-            }).catch(error => {
-                console.error('OCR Error:', error);
-            });
-        };
-        reader.readAsDataURL(file);
-    }
 });
