@@ -29,6 +29,9 @@
                 <label for="item-price">Price per Item:</label>
                 <input type="number" id="item-price" name="item-price" step="0.01" required>
                 
+                <label for="receipt-image">Upload Receipt Image:</label>
+                <input type="file" id="receipt-image" accept="image/*">
+                
                 <button type="button" id="generate-invoice">Generate Invoice</button>
             </form>
         </section>
@@ -43,5 +46,6 @@
         <p>&copy; 2025 Invoice Generator</p>
     </footer>
     <script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.1/dist/tesseract.min.js"></script>
 </body>
-</html>
+</html
