@@ -1,5 +1,5 @@
 // Import Tesseract.js (ensure you include it in your project)
-import Tesseract from 'tesseract.js';
+//import Tesseract from 'tesseract.js';
 
 // Handle receipt image upload and OCR
 document.getElementById('extract-data').addEventListener('click', function () {
