@@ -3,56 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice Generator</title>
+    <title>servizodobre</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Invoice Generator</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Create Invoice</h2>
-            <form id="invoice-form">
-                <label for="client-name">Client Name:</label>
-                <input type="text" id="client-name" name="client-name" required>
-                
-                <label for="client-email">Client Email:</label>
-                <input type="email" id="client-email" name="client-email" required>
-                
-                <label for="item-description">Item Description:</label>
-                <input type="text" id="item-description" name="item-description" required>
-                
-                <label for="item-quantity">Quantity:</label>
-                <input type="number" id="item-quantity" name="item-quantity" min="1" required>
-                
-                <label for="item-price">Price per Item:</label>
-                <input type="number" id="item-price" name="item-price" step="0.01" required>
-                
-                <label for="receipt-image">Upload Receipt Image:</label>
-                <input type="file" id="receipt-image" accept="image/*">
-                
-                <button type="button" id="extract-data">Extract</button>
-                <button type="button" id="generate-invoice">Generate Invoice</button>
-            </form>
-        </section>
-        <section>
-            <h2>Extracted Data</h2>
-            <div id="extracted-data">
-                <!-- Extracted data from the image will be displayed here -->
-            </div>
-        </section>
-        <section>
-            <h2>Generated Invoice</h2>
-            <div id="invoice-output">
-                <!-- Invoice details will be displayed here -->
-            </div>
-        </section>
-    </main>
     <footer>
-        <p>&copy; 2025-4 Invoice Generator</p>
+        <p>&copy; 2025 Servizodobre </p>
     </footer>
     <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.1/dist/tesseract.min.js"></script>
 </body>
 </html>
