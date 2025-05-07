@@ -1,7 +1,7 @@
 /* Import the font from the fonts directory */
 @font-face {
     font-family: 'CustomFont';
-    src: url('fonts/Annie\ Use\ Your\ Telescope.ttf') format('truetype'); /* Corrected format */
+    src: url('fonts/Annie\ Use\ Your\ Telescope.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -15,38 +15,78 @@ body {
     color: #093D65;
 }
 
-/* Header and footer styles */
-header, footer {
+/* Header styles */
+header {
     background-color: #0074D9;
     color: white;
-    text-align: center;
-    padding: 10px 0;
-    font-family: 'CustomFont', sans-serif; /* Added this line */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* Logo styling */
+#header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 #logo {
-    width: 50px;
+    width: 100px; /* Increased size */
     height: auto;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
 }
 
-/* Header title styling */
-header h1 {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0;
-    font-size: 1.5em;
+#menu {
+    display: flex;
+    gap: 20px;
 }
 
+#menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+#menu a:hover {
+    color: #FFD700; /* Gold color on hover */
+}
+
+/* Main content styles */
 main {
     padding: 2rem;
 }
 
+section {
+    margin-bottom: 3rem;
+}
+
+section h1, section h2 {
+    color: #0074D9;
+}
+
+section p {
+    font-size: 1.1em;
+    margin: 1rem 0;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 2rem;
+}
+
+/* Footer styles */
 footer {
-    position: fixed;
+    background-color: #093D65;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    position: relative;
     bottom: 0;
     width: 100%;
 }
