@@ -1,8 +1,7 @@
 /* Import the font from the fonts directory */
 @font-face {
     font-family: 'CustomFont';
-    src: url('fonts/Annie\ Use\ Your\ Telescope.ttf') format('annie'),
-         url('fonts/Annie\ Use\ Your\ Telescope.ttf') format('annie');
+    src: url('fonts/Annie\ Use\ Your\ Telescope.ttf') format('truetype'); /* Corrected format */
     font-weight: normal;
     font-style: normal;
 }
