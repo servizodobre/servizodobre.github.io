@@ -2,34 +2,37 @@
 //import Tesseract from 'tesseract.js';
 
 // Handle receipt image upload and OCR
-document.getElementById('extract-data').addEventListener('click', function () {
-    const fileInput = document.getElementById('receipt-image');
-    const file = fileInput.files[0];
+document.getElementById('extract-button').addEventListener('click', () => {
+    const fileInput = document.getElementById('invoice-image');
+    const output = document.getElementById('data-output');
 
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function () {
-            Tesseract.recognize(
-                reader.result, // Image data
-                'eng', // Language
-                {
-                    logger: info => console.log(info) // Log progress
-                }
-            ).then(({ data: { text } }) => {
-                console.log('Extracted Text:', text);
-
-                // Display the extracted text on the web page
-                const extractedDataDiv = document.getElementById('extracted-data');
-                extractedDataDiv.innerHTML = `<pre>${text}</pre>`;
-            }).catch(error => {
-                console.error('OCR Error:', error);
-                alert('Failed to extract text from the image.');
-            });
-        };
-        reader.readAsDataURL(file);
-    } else {
-        alert('Please upload a receipt image first.');
+    if (fileInput.files.length === 0) {
+        output.textContent = 'Please upload an image file.';
+        return;
     }
+
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function () {
+        const imageData = reader.result;
+
+        // Use Tesseract.js for OCR
+        Tesseract.recognize(
+            imageData, // Image data
+            'eng', // Language
+            {
+                logger: (info) => console.log(info), // Log progress
+            }
+        ).then(({ data: { text } }) => {
+            output.textContent = text || 'No text found in the image.';
+        }).catch((error) => {
+            console.error(error);
+            output.textContent = 'An error occurred while extracting text.';
+        });
+    };
+
+    reader.readAsDataURL(file);
 });
 
 // Generate invoice functionality

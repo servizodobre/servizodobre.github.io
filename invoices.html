@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoices - Servizodobre</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.1/dist/tesseract.min.js"></script>
+</head>
+<body>
+    <header>
+        <div id="header-container">
+            <img src="images/logo-color.png" alt="Servizodobre Logo" id="logo">
+            <nav id="menu">
+                <a href="index.html">Home</a>
+                <a href="#upload">Upload Invoice</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section id="upload">
+            <h1>Upload Invoice</h1>
+            <p>Please upload an image of your invoice to extract the data.</p>
+            <form id="invoice-form">
+                <input type="file" id="invoice-image" accept="image/*">
+                <button type="button" id="extract-button">Extract Data</button>
+            </form>
+        </section>
+        <section id="extracted-data">
+            <h2>Extracted Data</h2>
+            <p id="data-output">No data extracted yet.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Servizodobre. All rights reserved.</p>
+    </footer>
+    <script src="scripts.js"></script>
+</body>
+</html>
