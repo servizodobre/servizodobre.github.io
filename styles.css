@@ -22,6 +22,7 @@ header, footer {
     color: white;
     text-align: center;
     padding: 10px 0;
+    font-family: 'CustomFont', sans-serif; /* Added this line */
 }
 
 /* Logo styling */
