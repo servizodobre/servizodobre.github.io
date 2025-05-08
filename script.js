@@ -1,7 +1,3 @@
-// Import Tesseract.js (ensure you include it in your project)
-//import Tesseract from 'tesseract.js';
-
-// Handle receipt image upload and OCR
 document.getElementById('extract-button').addEventListener('click', () => {
     const fileInput = document.getElementById('invoice-image');
     const output = document.getElementById('data-output');
@@ -12,53 +8,23 @@ document.getElementById('extract-button').addEventListener('click', () => {
     }
 
     const file = fileInput.files[0];
-    const reader = new FileReader();
+    const formData = new FormData();
+    formData.append('file', file);
 
-    reader.onload = function () {
-        const imageData = reader.result;
-
-        // Use Tesseract.js for OCR
-        Tesseract.recognize(
-            imageData, // Image data
-            'eng', // Language
-            {
-                logger: (info) => console.log(info), // Log progress
+    fetch('http://127.0.0.1:5000/upload', {
+        method: 'POST',
+        body: formData,
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.error) {
+                output.textContent = `Error: ${data.error}`;
+            } else {
+                output.textContent = data.text || 'No text found in the image.';
             }
-        ).then(({ data: { text } }) => {
-            output.textContent = text || 'No text found in the image.';
-        }).catch((error) => {
+        })
+        .catch((error) => {
             console.error(error);
             output.textContent = 'An error occurred while extracting text.';
         });
-    };
-
-    reader.readAsDataURL(file);
-});
-
-// Generate invoice functionality
-document.getElementById('generate-invoice').addEventListener('click', function () {
-    // Get form values
-    const clientName = document.getElementById('client-name').value;
-    const clientEmail = document.getElementById('client-email').value;
-    const itemDescription = document.getElementById('item-description').value;
-    const itemQuantity = parseInt(document.getElementById('item-quantity').value, 10);
-    const itemPrice = parseFloat(document.getElementById('item-price').value);
-
-    // Calculate total price
-    const totalPrice = itemQuantity * itemPrice;
-
-    // Generate invoice HTML
-    const invoiceHTML = `
-        <h3>Invoice</h3>
-        <p><strong>Client Name:</strong> ${clientName}</p>
-        <p><strong>Client Email:</strong> ${clientEmail}</p>
-        <p><strong>Item Description:</strong> ${itemDescription}</p>
-        <p><strong>Quantity:</strong> ${itemQuantity}</p>
-        <p><strong>Price per Item:</strong> $${itemPrice.toFixed(2)}</p>
-        <p><strong>Total Price:</strong> $${totalPrice.toFixed(2)}</p>
-    `;
-
-    // Display the invoice
-    const invoiceOutput = document.getElementById('invoice-output');
-    invoiceOutput.innerHTML = invoiceHTML;
 });
