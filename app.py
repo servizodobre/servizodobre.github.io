@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import Flask-CORS
 from paddleocr import PaddleOCR
 import os
 
 app = Flask(__name__)
+CORS(app, resources={r"/upload": {"origins": "https://servizodobre.com/invoices.html"}})  # Enable CORS for specific route
+
 ocr = PaddleOCR(use_angle_cls=True, lang='en')  # Initialize PaddleOCR
 
 UPLOAD_FOLDER = 'uploads'
