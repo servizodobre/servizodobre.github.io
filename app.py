@@ -4,7 +4,7 @@ from paddleocr import PaddleOCR
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/upload": {"origins": "https://servizodobre.com/invoices.html"}})  # Enable CORS for specific route
+CORS(app, resources={r"/upload": {"origins": "https://servizodobre.com"}})  # Allow only your domain
 
 ocr = PaddleOCR(use_angle_cls=True, lang='en')  # Initialize PaddleOCR
 
