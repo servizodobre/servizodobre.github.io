@@ -25,7 +25,13 @@
                 <input type="password" id="password" name="password" required>
                 <button type="button" id="login-button">Login</button>
             </form>
+            <p>Don't have an account? <button id="signup-button">Sign Up</button></p> <!-- Sign Up button -->
         </section>
+        <script>
+            document.getElementById('signup-button').addEventListener('click', () => {
+                window.location.href = 'register.html'; // Redirect to register page
+            });
+        </script>
     </main>
     <footer>
         <p>&copy; 2025 Servizodobre. All rights reserved.</p>
