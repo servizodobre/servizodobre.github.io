@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS  # Import Flask-CORS
 from paddleocr import PaddleOCR
 import os
+import sqlite3
 
 app = Flask(__name__)
 CORS(app, resources={r"/upload": {"origins": "https://servizodobre.com"}})  # Allow only your domain
@@ -11,6 +12,22 @@ ocr = PaddleOCR(use_angle_cls=True, lang='en')  # Initialize PaddleOCR
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Initialize the database
+def init_db():
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+init_db()
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -32,6 +49,30 @@ def upload_file():
     os.remove(file_path)
 
     return jsonify({'text': extracted_text})
+
+# Route to handle user registration
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    print("Received data:", data)  # Debug: Print received data
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        print("Missing username or password")  # Debug: Missing data
+        return jsonify({'error': 'Username and password are required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
+        conn.commit()
+        conn.close()
+        print("User registered successfully")  # Debug: Success
+        return jsonify({'message': 'User registered successfully'}), 201
+    except sqlite3.IntegrityError as e:
+        print("IntegrityError:", e)  # Debug: Integrity error
+        return jsonify({'error': 'Username already exists'}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
