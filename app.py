@@ -5,7 +5,7 @@ import os
 import sqlite3
 
 app = Flask(__name__)
-CORS(app, resources={r"/upload": {"origins": "https://servizodobre.com"}})  # Allow only your domain
+CORS(app, resources={r"/*": {"origins": "https://servizodobre.com"}})  # Allow all endpoints for your domain
 
 ocr = PaddleOCR(use_angle_cls=True, lang='en')  # Initialize PaddleOCR
 
