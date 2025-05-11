@@ -134,8 +134,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     storeDiv.className = 'store-item';
                     storeDiv.innerHTML = `
                         <span>${store.name}</span>
-                        <button class="edit-store" data-id="${store.id}">Edit</button>
-                        <button class="delete-store" data-id="${store.id}">Delete</button>
+                        <button class="edit-store" data-id="${store.id}">
+                            <img src="images/edit-button.png" alt="Edit" class="icon">
+                        </button>
+                        <button class="delete-store" data-id="${store.id}">
+                            <img src="images/delete-button.png" alt="Delete" class="icon">
+                        </button>
                     `;
                     storeList.appendChild(storeDiv);
                 });
@@ -170,8 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Edit store
     document.getElementById('store-list').addEventListener('click', (event) => {
-        if (event.target.classList.contains('edit-store')) {
-            const storeId = event.target.dataset.id;
+        if (event.target.closest('.edit-store')) {
+            const storeId = event.target.closest('.edit-store').dataset.id;
             const newName = prompt('Enter new store name:');
 
             if (newName) {
@@ -196,8 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Delete store
     document.getElementById('store-list').addEventListener('click', (event) => {
-        if (event.target.classList.contains('delete-store')) {
-            const storeId = event.target.dataset.id;
+        if (event.target.closest('.delete-store')) {
+            const storeId = event.target.closest('.delete-store').dataset.id;
 
             if (confirm('Are you sure you want to delete this store?')) {
                 fetch('http://127.0.0.1:5000/delete_store', {
