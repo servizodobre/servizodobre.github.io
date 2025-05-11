@@ -97,7 +97,21 @@ button:disabled {
 }
 
 .user-item button {
+    background: none; /* Remove default button background */
+    border: none; /* Remove default button border */
+    padding: 0; /* Remove default padding */
+    cursor: pointer; /* Add pointer cursor on hover */
     margin-left: 10px; /* Add spacing between buttons */
+}
+
+.user-item button img.icon {
+    width: 20px; /* Set icon width */
+    height: 20px; /* Set icon height */
+    transition: transform 0.2s ease; /* Add a hover effect */
+}
+
+.user-item button img.icon:hover {
+    transform: scale(1.2); /* Slightly enlarge the icon on hover */
 }
 
 .user-item .edit-user {
