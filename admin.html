@@ -8,18 +8,25 @@
 </head>
 <body>
     <header>
-        <h1>Welcome to the Admin Dashboard</h1>
+        <h1>Admin Dashboard</h1>
     </header>
     <main>
-        <p id="welcome-message"></p>
+        <section id="user-management">
+            <h2>User Management</h2>
+            <button id="add-user-button">Add New User</button>
+            <div id="user-list">
+                <!-- Users will be dynamically loaded here -->
+            </div>
+            <div id="pagination">
+                <button id="prev-page" disabled>Previous</button>
+                <span id="page-info"></span>
+                <button id="next-page">Next</button>
+            </div>
+        </section>
     </main>
     <footer>
         <p>&copy; 2025 Servizodobre. All rights reserved.</p>
     </footer>
-    <script>
-        // Retrieve username from localStorage
-        const username = localStorage.getItem('username');
-        document.getElementById('welcome-message').textContent = `Welcome, Admin ${username}!`;
-    </script>
+    <script src="admin.js"></script>
 </body>
 </html>
