@@ -214,7 +214,91 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Fetch and display items
+    const fetchItems = () => {
+        fetch('http://127.0.0.1:5000/items')
+            .then((response) => response.json())
+            .then((data) => {
+                const itemList = document.getElementById('item-list');
+                itemList.innerHTML = ''; // Clear the current list
+
+                data.items.forEach((item) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'item';
+                    itemDiv.innerHTML = `
+                        <span>${item.name} - ${item.category} (${item.description || 'No description'})</span>
+                        <button class="edit-item" data-id="${item.id}">
+                            <img src="images/edit-button.png" alt="Edit" class="icon">
+                        </button>
+                        <button class="delete-item" data-id="${item.id}">
+                            <img src="images/delete-button.png" alt="Delete" class="icon">
+                        </button>
+                    `;
+                    itemList.appendChild(itemDiv);
+                });
+            })
+            .catch((error) => {
+                console.error('Error fetching items:', error);
+            });
+    };
+
+    // Add new item
+    document.getElementById('add-item-button').addEventListener('click', () => {
+        const name = prompt('Enter item name:');
+        const category = prompt('Enter item category:');
+        const description = prompt('Enter item description (optional):');
+
+        if (name && category) {
+            fetch('http://127.0.0.1:5000/add_item', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, category, description }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert(data.message || 'Item added successfully!');
+                    fetchItems(); // Refresh the item list
+                })
+                .catch((error) => {
+                    console.error('Error adding item:', error);
+                });
+        } else {
+            alert('Item name and category are required.');
+        }
+    });
+
+    // Edit item
+    document.getElementById('item-list').addEventListener('click', (event) => {
+        if (event.target.closest('.edit-item')) {
+            const itemId = event.target.closest('.edit-item').dataset.id;
+            const newName = prompt('Enter new item name:');
+            const newCategory = prompt('Enter new item category:');
+            const newDescription = prompt('Enter new item description (optional):');
+
+            if (newName || newCategory || newDescription) {
+                fetch('http://127.0.0.1:5000/edit_item', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: itemId, name: newName, category: newCategory, description: newDescription }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        alert(data.message || 'Item updated successfully!');
+                        fetchItems(); // Refresh the item list
+                    })
+                    .catch((error) => {
+                        console.error('Error editing item:', error);
+                    });
+            }
+        }
+    });
+
     // Initial fetch
     fetchUsers();
     fetchStores();
+    fetchItems();
 });

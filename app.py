@@ -36,6 +36,16 @@ def init_db():
         )
     ''')
 
+    # Create the items table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT UNIQUE NOT NULL,
+            category TEXT NOT NULL,
+            description TEXT
+        )
+    ''')
+
     conn.commit()
     conn.close()
 
@@ -312,6 +322,103 @@ def add_user():
     except Exception as e:
         print('Error adding user:', e)
         return jsonify({'error': 'An error occurred while adding the user'}), 500
+
+@app.route('/items', methods=['GET'])
+def get_items():
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Fetch all items
+        cursor.execute('SELECT id, name, category, description FROM items')
+        items = [{'id': row[0], 'name': row[1], 'category': row[2], 'description': row[3]} for row in cursor.fetchall()]
+
+        conn.close()
+        return jsonify({'items': items})
+    except Exception as e:
+        print('Error fetching items:', e)
+        return jsonify({'error': 'An error occurred while fetching items'}), 500
+
+@app.route('/add_item', methods=['POST'])
+def add_item():
+    data = request.json
+    name = data.get('name')
+    category = data.get('category')
+    description = data.get('description', '')
+
+    if not name or not category:
+        return jsonify({'error': 'Item name and category are required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Insert the new item
+        cursor.execute('INSERT INTO items (name, category, description) VALUES (?, ?, ?)', (name, category, description))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'Item added successfully!'})
+    except sqlite3.IntegrityError:
+        return jsonify({'error': 'Item name must be unique'}), 400
+    except Exception as e:
+        print('Error adding item:', e)
+        return jsonify({'error': 'An error occurred while adding the item'}), 500
+
+@app.route('/edit_item', methods=['PUT'])
+def edit_item():
+    data = request.json
+    item_id = data.get('id')
+    new_name = data.get('name')
+    new_category = data.get('category')
+    new_description = data.get('description')
+
+    if not item_id:
+        return jsonify({'error': 'Item ID is required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Update item details
+        if new_name:
+            cursor.execute('UPDATE items SET name = ? WHERE id = ?', (new_name, item_id))
+        if new_category:
+            cursor.execute('UPDATE items SET category = ? WHERE id = ?', (new_category, item_id))
+        if new_description:
+            cursor.execute('UPDATE items SET description = ? WHERE id = ?', (new_description, item_id))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'Item updated successfully!'})
+    except sqlite3.IntegrityError:
+        return jsonify({'error': 'Item name must be unique'}), 400
+    except Exception as e:
+        print('Error editing item:', e)
+        return jsonify({'error': 'An error occurred while editing the item'}), 500
+
+@app.route('/delete_item', methods=['DELETE'])
+def delete_item():
+    data = request.json
+    item_id = data.get('id')
+
+    if not item_id:
+        return jsonify({'error': 'Item ID is required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Delete the item
+        cursor.execute('DELETE FROM items WHERE id = ?', (item_id,))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'Item deleted successfully!'})
+    except Exception as e:
+        print('Error deleting item:', e)
+        return jsonify({'error': 'An error occurred while deleting the item'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
