@@ -1,36 +1,60 @@
-/* Import the font from the fonts directory */
-@font-face {
-    font-family: 'CustomFont';
+document.getElementById('login-button').addEventListener('click', () => {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
     src: url('fonts/Annie\ Use\ Your\ Telescope.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+    if (username && password) {
+        fetch('http://127.0.0.1:5000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },y: 'CustomFont', sans-serif;
+            body: JSON.stringify({ username, password }),
+        })g: 0;
+            .then((response) => response.json())
+            .then((data) => {;
+                if (data.error) {
+                    alert(`Error: ${data.error}`);
+                } else {
+                    alert(data.message);
+                    // Store username and category in localStorage
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('category', data.category);
+                    window.location.href = 'profile.html'; // Redirect to profile page
+                };
+            })ntent: space-between;
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred while logging in.');
+            });00;
+    } else {
+        alert('Please fill in both username and password.');
+    }er-container {
+}); display: flex;
 
-body {
-    font-family: 'CustomFont', sans-serif;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    background-color: #ffffff;
-    color: #093D65;
-}
 
-/* Header styles */
-header {
-    background-color: #0074D9;
-    color: white;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
 
-#header-container {
-    display: flex;
-    justify-content: space-between;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return jsonify({'error': str(e)}), 500    except sqlite3.Error as e:            return jsonify({'error': 'Invalid username or password'}), 401        else:            return jsonify({'message': 'Login successful', 'category': category}), 200            category = result[0]        if result:        conn.close()        result = cursor.fetchone()        cursor.execute('SELECT category FROM users WHERE username = ? AND password = ?', (username, password))        cursor = conn.cursor()        conn = sqlite3.connect('users.db')    try:        return jsonify({'error': 'Username and password are required'}), 400    if not username or not password:    password = data.get('password')    username = data.get('username')    data = request.jsondef login():@app.route('/login', methods=['POST'])    justify-content: space-between;
     align-items: center;
     width: 100%;
 }

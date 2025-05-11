@@ -21,7 +21,8 @@ def init_db():
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            category TEXT DEFAULT 'user'
         )
     ''')
     conn.commit()
@@ -65,7 +66,7 @@ def register():
     try:
         conn = sqlite3.connect('users.db')
         cursor = conn.cursor()
-        cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
+        cursor.execute('INSERT INTO users (username, password, category) VALUES (?, ?, ?)', (username, password, 'user'))
         conn.commit()
         conn.close()
         print("User registered successfully")  # Debug: Success
