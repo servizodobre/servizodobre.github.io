@@ -17,17 +17,9 @@
         <p>&copy; 2025 Servizodobre. All rights reserved.</p>
     </footer>
     <script>
-        // Retrieve username and category from localStorage
+        // Retrieve username from localStorage
         const username = localStorage.getItem('username');
-        const category = localStorage.getItem('category');
-
-        // Display the username if the category is admin
-        if (category === 'admin') {
-            document.getElementById('welcome-message').textContent = `Welcome, ${username}!`;
-        } else {
-            alert('Access denied. Only admin users can view this page.');
-            window.location.href = 'login.html'; // Redirect to login page
-        }
+        document.getElementById('welcome-message').textContent = `Welcome, ${username}!`;
     </script>
 </body>
 </html>
