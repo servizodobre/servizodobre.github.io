@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Servizodobre</title>
+    <title>User Profile</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to the Admin Profile Page</h1>
+        <h1>Welcome to Your Profile</h1>
     </header>
     <main>
         <p id="welcome-message"></p>
@@ -24,6 +24,10 @@
         // Display the username if the category is admin
         if (category === 'admin') {
             document.getElementById('welcome-message').textContent = `Welcome, ${username}!`;
-    <script src="profile.js"></script>
+        } else {
+            alert('Access denied. Only admin users can view this page.');
+            window.location.href = 'login.html'; // Redirect to login page
+        }
+    </script>
 </body>
 </html>

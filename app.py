@@ -75,23 +75,30 @@ def register():
         print("IntegrityError:", e)  # Debug: Integrity error
         return jsonify({'error': 'Username already exists'}), 400
 
-@app.route('/login', methods=['POST', 'OPTIONS'])
+@app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'OPTIONS':
-        # Handle preflight request
-        response = app.make_response('')
-        response.headers['Access-Control-Allow-Origin'] = 'https://servizodobre.com'
-        response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-        return response, 200
-
-    # Handle actual login request
     data = request.json
     username = data.get('username')
     password = data.get('password')
 
-    # Add your login logic here
-    return jsonify({'message': 'Login successful'})
+    if not username or not password:
+        return jsonify({'error': 'Username and password are required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT category FROM users WHERE username = ? AND password = ?', (username, password))
+        result = cursor.fetchone()
+        conn.close()
+
+        if result:
+            category = result[0]
+            return jsonify({'message': 'Login successful', 'category': category})
+        else:
+            return jsonify({'error': 'Invalid username or password'}), 401
+    except Exception as e:
+        print('Error:', e)
+        return jsonify({'error': 'An error occurred while processing the login'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
