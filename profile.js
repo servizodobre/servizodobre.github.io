@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch and populate stores
     const fetchStores = () => {
-        fetch('http://127.0.0.1:5000/stores') // Replace with your backend URL if different
+        fetch('http://127.0.0.1:5000/stores')
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch stores');
@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then((data) => {
+                console.log('Stores fetched:', data); // Debugging log
                 const storeDropdown = document.getElementById('expense-store');
                 storeDropdown.innerHTML = ''; // Clear existing options
 
@@ -53,12 +54,23 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('http://127.0.0.1:5000/items')
             .then((response) => response.json())
             .then((data) => {
+                console.log('Items fetched:', data); // Debugging log
                 const itemDropdown = document.getElementById('expense-item');
                 itemDropdown.innerHTML = ''; // Clear existing options
+
+                // Add a default "Select an item" option
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Select an item';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                itemDropdown.appendChild(defaultOption);
+
+                // Populate the dropdown with item names
                 data.items.forEach((item) => {
                     const option = document.createElement('option');
-                    option.value = item.id;
-                    option.textContent = item.name;
+                    option.value = item.id; // Use the item ID as the value
+                    option.textContent = item.name; // Display the item name
                     itemDropdown.appendChild(option);
                 });
             })
