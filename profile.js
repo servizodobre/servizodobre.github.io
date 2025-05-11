@@ -17,7 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch and populate stores
     const fetchStores = () => {
         fetch('http://127.0.0.1:5000/stores') // Replace with your backend URL if different
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch stores');
+                }
+                return response.json();
+            })
             .then((data) => {
                 const storeDropdown = document.getElementById('expense-store');
                 storeDropdown.innerHTML = ''; // Clear existing options
