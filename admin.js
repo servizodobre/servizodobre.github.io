@@ -55,17 +55,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Edit user
     document.getElementById('user-list').addEventListener('click', (event) => {
         if (event.target.closest('.edit-user')) {
-            const username = event.target.closest('.edit-user').dataset.username;
-            const newPassword = prompt(`Enter new password for ${username}:`);
-            const newCategory = prompt(`Enter new category for ${username} (user/admin):`);
+            const oldUsername = event.target.closest('.edit-user').dataset.username;
+            const newUsername = prompt(`Enter new username for ${oldUsername}:`, oldUsername);
+            const newPassword = prompt(`Enter new password for ${newUsername || oldUsername}:`);
+            const newCategory = prompt(`Enter new category for ${newUsername || oldUsername} (user/admin):`);
 
-            if (newPassword || newCategory) {
+            if (newUsername || newPassword || newCategory) {
                 fetch('http://127.0.0.1:5000/edit_user', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ username, password: newPassword, category: newCategory }),
+                    body: JSON.stringify({
+                        oldUsername,
+                        newUsername,
+                        password: newPassword,
+                        category: newCategory,
+                    }),
                 })
                     .then((response) => response.json())
                     .then((data) => {

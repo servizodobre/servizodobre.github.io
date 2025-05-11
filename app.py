@@ -232,5 +232,60 @@ def delete_store():
         print('Error deleting store:', e)
         return jsonify({'error': 'An error occurred while deleting the store'}), 500
 
+@app.route('/edit_user', methods=['PUT'])
+def edit_user():
+    data = request.json
+    old_username = data.get('oldUsername')
+    new_username = data.get('newUsername')
+    new_password = data.get('password')
+    new_category = data.get('category')
+
+    if not old_username:
+        return jsonify({'error': 'Old username is required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Update username, password, and category if provided
+        if new_username:
+            cursor.execute('UPDATE users SET username = ? WHERE username = ?', (new_username, old_username))
+        if new_password:
+            cursor.execute('UPDATE users SET password = ? WHERE username = ?', (new_password, new_username or old_username))
+        if new_category:
+            cursor.execute('UPDATE users SET category = ? WHERE username = ?', (new_category, new_username or old_username))
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'User updated successfully!'})
+    except sqlite3.IntegrityError:
+        return jsonify({'error': 'New username must be unique'}), 400
+    except Exception as e:
+        print('Error editing user:', e)
+        return jsonify({'error': 'An error occurred while editing the user'}), 500
+
+@app.route('/delete_user', methods=['DELETE'])
+def delete_user():
+    data = request.json
+    username = data.get('username')
+
+    if not username:
+        return jsonify({'error': 'Username is required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Delete the user
+        cursor.execute('DELETE FROM users WHERE username = ?', (username,))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'User deleted successfully!'})
+    except Exception as e:
+        print('Error deleting user:', e)
+        return jsonify({'error': 'An error occurred while deleting the user'}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
