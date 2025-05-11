@@ -16,15 +16,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch and populate stores
     const fetchStores = () => {
-        fetch('http://127.0.0.1:5000/stores')
+        fetch('http://127.0.0.1:5000/stores') // Replace with your backend URL if different
             .then((response) => response.json())
             .then((data) => {
                 const storeDropdown = document.getElementById('expense-store');
                 storeDropdown.innerHTML = ''; // Clear existing options
+
+                // Add a default "Select a store" option
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Select a store';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                storeDropdown.appendChild(defaultOption);
+
+                // Populate the dropdown with store names
                 data.stores.forEach((store) => {
                     const option = document.createElement('option');
-                    option.value = store.id;
-                    option.textContent = store.name;
+                    option.value = store.id; // Use the store ID as the value
+                    option.textContent = store.name; // Display the store name
                     storeDropdown.appendChild(option);
                 });
             })
