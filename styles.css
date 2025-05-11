@@ -58,3 +58,74 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+button {
+    background-color: #0074D9; /* Primary color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding for size */
+    font-size: 1rem; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+button:hover {
+    background-color: #005bb5; /* Darker shade on hover */
+}
+
+button:disabled {
+    background-color: #cccccc; /* Disabled button color */
+    cursor: not-allowed; /* Not-allowed cursor for disabled buttons */
+}
+
+.user-item {
+    display: flex; /* Align user details and buttons horizontally */
+    justify-content: space-between; /* Add space between user details and buttons */
+    align-items: center; /* Align items vertically */
+    padding: 10px; /* Add padding around the user item */
+    margin-bottom: 10px; /* Add spacing between user items */
+    border: 1px solid #ddd; /* Optional: Add a light border for separation */
+    border-radius: 5px; /* Rounded corners for a polished look */
+    background-color: #f9f9f9; /* Light background for better visibility */
+}
+
+.user-item span {
+    flex: 1; /* Allow the user details to take up available space */
+    font-size: 1rem; /* Adjust font size for consistency */
+    color: var(--text-color); /* Use the theme's text color */
+}
+
+.user-item button {
+    margin-left: 10px; /* Add spacing between buttons */
+}
+
+.user-item .edit-user {
+    background-color: #0074D9; /* Primary color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding for size */
+    font-size: 1rem; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.user-item .delete-user {
+    background-color: #ff4136; /* Red color for delete button */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding for size */
+    font-size: 1rem; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.user-item .edit-user:hover {
+    background-color: #005bb5; /* Darker shade on hover */
+}
+
+.user-item .delete-user:hover {
+    background-color: #c70000; /* Darker red shade on hover */
+}
