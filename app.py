@@ -46,6 +46,21 @@ def init_db():
         )
     ''')
 
+    # Create the expenses table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS expenses (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date TEXT NOT NULL,
+            store_id INTEGER NOT NULL,
+            item_id INTEGER NOT NULL,
+            quantity INTEGER NOT NULL,
+            price REAL NOT NULL,
+            bucket TEXT NOT NULL,
+            FOREIGN KEY (store_id) REFERENCES stores (id),
+            FOREIGN KEY (item_id) REFERENCES items (id)
+        )
+    ''')
+
     conn.commit()
     conn.close()
 
@@ -419,6 +434,61 @@ def delete_item():
     except Exception as e:
         print('Error deleting item:', e)
         return jsonify({'error': 'An error occurred while deleting the item'}), 500
+
+@app.route('/expenses', methods=['GET'])
+def get_expenses():
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Fetch all expenses
+        cursor.execute('''
+            SELECT e.date, s.name AS store, i.name AS item, e.quantity, e.price, e.bucket
+            FROM expenses e
+            JOIN stores s ON e.store_id = s.id
+            JOIN items i ON e.item_id = i.id
+        ''')
+        expenses = [
+            {'date': row[0], 'store': row[1], 'item': row[2], 'quantity': row[3], 'price': row[4], 'bucket': row[5]}
+            for row in cursor.fetchall()
+        ]
+
+        conn.close()
+        return jsonify({'expenses': expenses})
+    except Exception as e:
+        print('Error fetching expenses:', e)
+        return jsonify({'error': 'An error occurred while fetching expenses'}), 500
+
+
+@app.route('/add_expense', methods=['POST'])
+def add_expense():
+    data = request.json
+    date = data.get('date')
+    store_id = data.get('store')
+    item_id = data.get('item')
+    quantity = data.get('quantity')
+    price = data.get('price')
+    bucket = data.get('bucket')
+
+    if not (date and store_id and item_id and quantity and price and bucket):
+        return jsonify({'error': 'All fields are required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Insert the new expense
+        cursor.execute('''
+            INSERT INTO expenses (date, store_id, item_id, quantity, price, bucket)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (date, store_id, item_id, quantity, price, bucket))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'Expense added successfully!'})
+    except Exception as e:
+        print('Error adding expense:', e)
+        return jsonify({'error': 'An error occurred while adding the expense'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
