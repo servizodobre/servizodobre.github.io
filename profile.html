@@ -8,22 +8,22 @@
 </head>
 <body>
     <header>
-        <div id="header-container">
-            <img src="images/logo-color.png" alt="Servizodobre Logo" id="logo">
-            <nav id="menu">
-                <a href="index.html">Home</a>
-            </nav>
-        </div>
+        <h1>Welcome to the Admin Profile Page</h1>
     </header>
     <main>
-        <section id="profile">
-            <h1>Welcome to Your Profile</h1>
-            <p id="welcome-message"></p>
-        </section>
+        <p id="welcome-message"></p>
     </main>
     <footer>
         <p>&copy; 2025 Servizodobre. All rights reserved.</p>
     </footer>
+    <script>
+        // Retrieve username and category from localStorage
+        const username = localStorage.getItem('username');
+        const category = localStorage.getItem('category');
+
+        // Display the username if the category is admin
+        if (category === 'admin') {
+            document.getElementById('welcome-message').textContent = `Welcome, ${username}!`;
     <script src="profile.js"></script>
 </body>
 </html>
