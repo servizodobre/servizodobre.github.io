@@ -115,7 +115,7 @@ button:disabled {
 }
 
 .user-item .edit-user {
-    background-color: #0074D9; /* Primary color */
+    background-color: #FFFFFF;
     color: white; /* Text color */
     border: none; /* Remove border */
     border-radius: 5px; /* Rounded corners */
@@ -126,7 +126,7 @@ button:disabled {
 }
 
 .user-item .delete-user {
-    background-color: #ff4136; /* Red color for delete button */
+    background-color: #ffffff; 
     color: white; /* Text color */
     border: none; /* Remove border */
     border-radius: 5px; /* Rounded corners */
@@ -142,4 +142,39 @@ button:disabled {
 
 .user-item .delete-user:hover {
     background-color: #c70000; /* Darker red shade on hover */
+}
+
+.store-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.store-item span {
+    flex: 1;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.store-item button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.store-item button img.icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+}
+
+.store-item button img.icon:hover {
+    transform: scale(1.2);
 }

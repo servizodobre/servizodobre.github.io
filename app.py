@@ -17,6 +17,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def init_db():
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
+
+    # Create the users table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,6 +27,15 @@ def init_db():
             category TEXT DEFAULT 'user'
         )
     ''')
+
+    # Create the stores table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS stores (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT UNIQUE NOT NULL
+        )
+    ''')
+
     conn.commit()
     conn.close()
 
@@ -132,6 +143,94 @@ def get_users():
     except Exception as e:
         print('Error fetching users:', e)
         return jsonify({'error': 'An error occurred while fetching users'}), 500
+
+@app.route('/stores', methods=['GET'])
+def get_stores():
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Fetch all stores
+        cursor.execute('SELECT id, name FROM stores')
+        stores = [{'id': row[0], 'name': row[1]} for row in cursor.fetchall()]
+
+        conn.close()
+        return jsonify({'stores': stores})
+    except Exception as e:
+        print('Error fetching stores:', e)
+        return jsonify({'error': 'An error occurred while fetching stores'}), 500
+
+
+@app.route('/add_store', methods=['POST'])
+def add_store():
+    data = request.json
+    name = data.get('name')
+
+    if not name:
+        return jsonify({'error': 'Store name is required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Insert the new store
+        cursor.execute('INSERT INTO stores (name) VALUES (?)', (name,))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'Store added successfully!'})
+    except sqlite3.IntegrityError:
+        return jsonify({'error': 'Store name must be unique'}), 400
+    except Exception as e:
+        print('Error adding store:', e)
+        return jsonify({'error': 'An error occurred while adding the store'}), 500
+
+
+@app.route('/edit_store', methods=['PUT'])
+def edit_store():
+    data = request.json
+    store_id = data.get('id')
+    new_name = data.get('name')
+
+    if not store_id or not new_name:
+        return jsonify({'error': 'Store ID and new name are required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Update the store name
+        cursor.execute('UPDATE stores SET name = ? WHERE id = ?', (new_name, store_id))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'Store updated successfully!'})
+    except Exception as e:
+        print('Error editing store:', e)
+        return jsonify({'error': 'An error occurred while editing the store'}), 500
+
+
+@app.route('/delete_store', methods=['DELETE'])
+def delete_store():
+    data = request.json
+    store_id = data.get('id')
+
+    if not store_id:
+        return jsonify({'error': 'Store ID is required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Delete the store
+        cursor.execute('DELETE FROM stores WHERE id = ?', (store_id,))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'Store deleted successfully!'})
+    except Exception as e:
+        print('Error deleting store:', e)
+        return jsonify({'error': 'An error occurred while deleting the store'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

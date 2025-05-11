@@ -121,6 +121,105 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchUsers(currentPage);
     });
 
+    // Fetch and display stores
+    const fetchStores = () => {
+        fetch('http://127.0.0.1:5000/stores')
+            .then((response) => response.json())
+            .then((data) => {
+                const storeList = document.getElementById('store-list');
+                storeList.innerHTML = ''; // Clear the current list
+
+                data.stores.forEach((store) => {
+                    const storeDiv = document.createElement('div');
+                    storeDiv.className = 'store-item';
+                    storeDiv.innerHTML = `
+                        <span>${store.name}</span>
+                        <button class="edit-store" data-id="${store.id}">Edit</button>
+                        <button class="delete-store" data-id="${store.id}">Delete</button>
+                    `;
+                    storeList.appendChild(storeDiv);
+                });
+            })
+            .catch((error) => {
+                console.error('Error fetching stores:', error);
+            });
+    };
+
+    // Add new store
+    document.getElementById('add-store-button').addEventListener('click', () => {
+        const name = prompt('Enter store name:');
+
+        if (name) {
+            fetch('http://127.0.0.1:5000/add_store', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert(data.message || 'Store added successfully!');
+                    fetchStores(); // Refresh the store list
+                })
+                .catch((error) => {
+                    console.error('Error adding store:', error);
+                });
+        }
+    });
+
+    // Edit store
+    document.getElementById('store-list').addEventListener('click', (event) => {
+        if (event.target.classList.contains('edit-store')) {
+            const storeId = event.target.dataset.id;
+            const newName = prompt('Enter new store name:');
+
+            if (newName) {
+                fetch('http://127.0.0.1:5000/edit_store', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: storeId, name: newName }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        alert(data.message || 'Store updated successfully!');
+                        fetchStores(); // Refresh the store list
+                    })
+                    .catch((error) => {
+                        console.error('Error editing store:', error);
+                    });
+            }
+        }
+    });
+
+    // Delete store
+    document.getElementById('store-list').addEventListener('click', (event) => {
+        if (event.target.classList.contains('delete-store')) {
+            const storeId = event.target.dataset.id;
+
+            if (confirm('Are you sure you want to delete this store?')) {
+                fetch('http://127.0.0.1:5000/delete_store', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: storeId }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        alert(data.message || 'Store deleted successfully!');
+                        fetchStores(); // Refresh the store list
+                    })
+                    .catch((error) => {
+                        console.error('Error deleting store:', error);
+                    });
+            }
+        }
+    });
+
     // Initial fetch
     fetchUsers(currentPage);
+    fetchStores();
 });
