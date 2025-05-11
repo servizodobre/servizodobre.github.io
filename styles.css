@@ -148,3 +148,38 @@ button:disabled {
 .store-item button img.icon:hover {
     transform: scale(1.2);
 }
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.item span {
+    flex: 1;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.item button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.item button img.icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+}
+
+.item button img.icon:hover {
+    transform: scale(1.2);
+}
