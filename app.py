@@ -100,5 +100,38 @@ def login():
         print('Error:', e)
         return jsonify({'error': 'An error occurred while processing the login'}), 500
 
+@app.route('/users', methods=['GET'])
+def get_users():
+    try:
+        # Get pagination parameters
+        page = int(request.args.get('page', 1))
+        limit = int(request.args.get('limit', 5))
+        offset = (page - 1) * limit
+
+        # Connect to the database
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Fetch users with pagination
+        cursor.execute('SELECT username, category FROM users LIMIT ? OFFSET ?', (limit, offset))
+        users = [{'username': row[0], 'category': row[1]} for row in cursor.fetchall()]
+
+        # Get total user count for pagination
+        cursor.execute('SELECT COUNT(*) FROM users')
+        total_users = cursor.fetchone()[0]
+        total_pages = (total_users + limit - 1) // limit  # Calculate total pages
+
+        conn.close()
+
+        # Return users and pagination info
+        return jsonify({
+            'users': users,
+            'page': page,
+            'totalPages': total_pages
+        })
+    except Exception as e:
+        print('Error fetching users:', e)
+        return jsonify({'error': 'An error occurred while fetching users'}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
