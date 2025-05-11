@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 .catch((error) => {
                     console.error('Error adding user:', error);
                 });
+        } else {
+            alert('All fields are required to add a new user.');
         }
     });
 

@@ -287,5 +287,31 @@ def delete_user():
         print('Error deleting user:', e)
         return jsonify({'error': 'An error occurred while deleting the user'}), 500
 
+@app.route('/add_user', methods=['POST'])
+def add_user():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    category = data.get('category', 'user')  # Default to 'user' if category is not provided
+
+    if not username or not password:
+        return jsonify({'error': 'Username and password are required'}), 400
+
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+
+        # Insert the new user
+        cursor.execute('INSERT INTO users (username, password, category) VALUES (?, ?, ?)', (username, password, category))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'User added successfully!'})
+    except sqlite3.IntegrityError:
+        return jsonify({'error': 'Username already exists'}), 400
+    except Exception as e:
+        print('Error adding user:', e)
+        return jsonify({'error': 'An error occurred while adding the user'}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
