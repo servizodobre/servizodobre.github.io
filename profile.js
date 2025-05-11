@@ -14,6 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'login.html';
     }
 
+    const storeDropdown = document.getElementById('expense-store');
+
+    // Fetch stores when the dropdown is clicked
+    storeDropdown.addEventListener('click', () => {
+        console.log('Dropdown clicked, fetching stores...');
+        fetchStores();
+    });
+
     // Fetch and populate stores
     const fetchStores = () => {
         fetch('http://127.0.0.1:5000/stores')
@@ -25,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then((data) => {
                 console.log('Stores fetched:', data); // Debugging log
-                const storeDropdown = document.getElementById('expense-store');
                 storeDropdown.innerHTML = ''; // Clear existing options
 
                 // Add a default "Select a store" option
@@ -132,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initial fetches
-    fetchStores();
     fetchItems();
     fetchExpenses();
 });
