@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded and parsed'); // Debugging log
+
     const username = localStorage.getItem('username');
     const category = localStorage.getItem('category');
     const welcomeMessage = document.getElementById('welcome-message');
@@ -14,16 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'login.html';
     }
 
-    const storeDropdown = document.getElementById('expense-store');
-
-    // Fetch stores when the dropdown is clicked
-    storeDropdown.addEventListener('click', () => {
-        console.log('Dropdown clicked, fetching stores...');
-        fetchStores();
-    });
-
-    // Fetch and populate stores
     const fetchStores = () => {
+        console.log('Fetching stores...'); // Debugging log
         fetch('http://127.0.0.1:5000/stores')
             .then((response) => {
                 if (!response.ok) {
@@ -33,12 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then((data) => {
                 console.log('Stores fetched:', data); // Debugging log
+                const storeDropdown = document.getElementById('expense-store');
                 storeDropdown.innerHTML = ''; // Clear existing options
 
                 // Add a default "Select a store" option
                 const defaultOption = document.createElement('option');
                 defaultOption.value = '';
-                defaultOption.textContent = 'Select a store';
+                defaultOption.textContent = 'Select a store from list';
                 defaultOption.disabled = true;
                 defaultOption.selected = true;
                 storeDropdown.appendChild(defaultOption);
@@ -139,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initial fetches
+    fetchStores();
     fetchItems();
     fetchExpenses();
 });
