@@ -114,38 +114,6 @@ button:disabled {
     transform: scale(1.2); /* Slightly enlarge the icon on hover */
 }
 
-.user-item .edit-user {
-    background: none; /* Remove default background */
-    border: none; /* Remove default border */
-    padding: 0; /* Remove default padding */
-    cursor: pointer; /* Add pointer cursor */
-}
-
-.user-item .edit-user img.icon {
-    width: 20px; /* Set icon width */
-    height: 20px; /* Set icon height */
-    transition: transform 0.2s ease; /* Add hover effect */
-}
-
-.user-item .edit-user img.icon:hover {
-    transform: scale(1.2); /* Slightly enlarge the icon on hover */
-}
-
-.user-item .delete-user {
-    background-color: #ffffff; 
-    color: white; /* Text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px 15px; /* Padding for size */
-    font-size: 1rem; /* Font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
-}
-
-.user-item .delete-user:hover {
-    background-color: #c70000; /* Darker red shade on hover */
-}
-
 .store-item {
     display: flex;
     justify-content: space-between;
