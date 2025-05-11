@@ -75,5 +75,23 @@ def register():
         print("IntegrityError:", e)  # Debug: Integrity error
         return jsonify({'error': 'Username already exists'}), 400
 
+@app.route('/login', methods=['POST', 'OPTIONS'])
+def login():
+    if request.method == 'OPTIONS':
+        # Handle preflight request
+        response = app.make_response('')
+        response.headers['Access-Control-Allow-Origin'] = 'https://servizodobre.com'
+        response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response, 200
+
+    # Handle actual login request
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+
+    # Add your login logic here
+    return jsonify({'message': 'Login successful'})
+
 if __name__ == '__main__':
     app.run(debug=True)

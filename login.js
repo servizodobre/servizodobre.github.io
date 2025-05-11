@@ -1,6 +1,7 @@
 document.getElementById('login-button').addEventListener('click', () => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    const category = document.getElementById('category').value;
 
     if (username && password) {
         fetch('http://127.0.0.1:5000/login', {
@@ -18,7 +19,7 @@ document.getElementById('login-button').addEventListener('click', () => {
                     alert(data.message);
                     // Store username and category in localStorage
                     localStorage.setItem('username', username);
-                    localStorage.setItem('category', data.category);
+                    localStorage.setItem('category', category);
                     window.location.href = 'profile.html'; // Redirect to profile page
                 }
             })
