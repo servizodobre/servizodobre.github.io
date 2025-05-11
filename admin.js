@@ -1,10 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let currentPage = 1;
-    const usersPerPage = 5;
-
     // Fetch and display users
-    const fetchUsers = (page) => {
-        fetch(`http://127.0.0.1:5000/users?page=${page}&limit=${usersPerPage}`)
+    const fetchUsers = () => {
+        fetch('http://127.0.0.1:5000/users')
             .then((response) => response.json())
             .then((data) => {
                 const userList = document.getElementById('user-list');
@@ -15,16 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     userDiv.className = 'user-item';
                     userDiv.innerHTML = `
                         <span>${user.username} (${user.category})</span>
-                        <button class="edit-user" data-username="${user.username}">Edit</button>
-                        <button class="delete-user" data-username="${user.username}">Delete</button>
+                        <button class="edit-user" data-username="${user.username}">
+                            <img src="images/edit-button.png" alt="Edit" class="icon">
+                        </button>
+                        <button class="delete-user" data-username="${user.username}">
+                            <img src="images/delete-button.png" alt="Delete" class="icon">
+                        </button>
                     `;
                     userList.appendChild(userDiv);
                 });
-
-                // Update pagination info
-                document.getElementById('page-info').textContent = `Page ${data.page} of ${data.totalPages}`;
-                document.getElementById('prev-page').disabled = data.page === 1;
-                document.getElementById('next-page').disabled = data.page === data.totalPages;
             })
             .catch((error) => {
                 console.error('Error fetching users:', error);
@@ -48,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then((response) => response.json())
                 .then((data) => {
                     alert(data.message || 'User added successfully!');
-                    fetchUsers(currentPage); // Refresh the user list
+                    fetchUsers(); // Refresh the user list
                 })
                 .catch((error) => {
                     console.error('Error adding user:', error);
@@ -58,8 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Edit user
     document.getElementById('user-list').addEventListener('click', (event) => {
-        if (event.target.classList.contains('edit-user')) {
-            const username = event.target.dataset.username;
+        if (event.target.closest('.edit-user')) {
+            const username = event.target.closest('.edit-user').dataset.username;
             const newPassword = prompt(`Enter new password for ${username}:`);
             const newCategory = prompt(`Enter new category for ${username} (user/admin):`);
 
@@ -74,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then((response) => response.json())
                     .then((data) => {
                         alert(data.message || 'User updated successfully!');
-                        fetchUsers(currentPage); // Refresh the user list
+                        fetchUsers(); // Refresh the user list
                     })
                     .catch((error) => {
                         console.error('Error editing user:', error);
@@ -85,11 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Delete user
     document.getElementById('user-list').addEventListener('click', (event) => {
-        if (event.target.classList.contains('delete-user')) {
-            const username = event.target.dataset.username;
+        if (event.target.closest('.delete-user')) {
+            const username = event.target.closest('.delete-user').dataset.username;
 
             if (confirm(`Are you sure you want to delete ${username}?`)) {
-                fetch('http://127.0.0.1:5000/remove_user', {
+                fetch('http://127.0.0.1:5000/delete_user', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -98,27 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                     .then((response) => response.json())
                     .then((data) => {
-                        alert(data.message || 'User removed successfully!');
-                        fetchUsers(currentPage); // Refresh the user list
+                        alert(data.message || 'User deleted successfully!');
+                        fetchUsers(); // Refresh the user list
                     })
                     .catch((error) => {
                         console.error('Error deleting user:', error);
                     });
             }
         }
-    });
-
-    // Pagination
-    document.getElementById('prev-page').addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            fetchUsers(currentPage);
-        }
-    });
-
-    document.getElementById('next-page').addEventListener('click', () => {
-        currentPage++;
-        fetchUsers(currentPage);
     });
 
     // Fetch and display stores
@@ -224,6 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initial fetch
-    fetchUsers(currentPage);
+    fetchUsers();
     fetchStores();
 });
