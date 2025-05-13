@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template
 from flask_cors import CORS  # Import Flask-CORS
 from paddleocr import PaddleOCR
 import os
@@ -20,15 +20,10 @@ UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Serve the index.html from the html directory
+# Serve the index.html from the templates directory
 @app.route('/')
 def index():
-    return send_from_directory('html', 'index.html')
-
-# Serve other static files (CSS, JS, etc.)
-@app.route('/html/<path:filename>')
-def serve_static_files(filename):
-    return send_from_directory('html', filename)
+    return render_template('index.html')
 
 # Initialize the database
 def init_db():
