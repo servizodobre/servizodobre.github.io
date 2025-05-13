@@ -4,6 +4,13 @@ from paddleocr import PaddleOCR
 import os
 import sqlite3
 
+DATABASE_PATH = 'data/users.db'
+
+def get_db_connection():
+    conn = sqlite3.connect(DATABASE_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://servizodobre.com"}})  # Allow all endpoints for your domain
 
@@ -15,7 +22,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Initialize the database
 def init_db():
-    conn = sqlite3.connect('users.db')
+    conn = get_db_connection()
     cursor = conn.cursor()
 
     # Create the users table
@@ -100,7 +107,7 @@ def register():
         return jsonify({'error': 'Username and password are required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('INSERT INTO users (username, password, category) VALUES (?, ?, ?)', (username, password, 'user'))
         conn.commit()
@@ -121,7 +128,7 @@ def login():
         return jsonify({'error': 'Username and password are required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('SELECT category FROM users WHERE username = ? AND password = ?', (username, password))
         result = cursor.fetchone()
@@ -145,7 +152,7 @@ def get_users():
         offset = (page - 1) * limit
 
         # Connect to the database
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Fetch users with pagination
@@ -172,7 +179,7 @@ def get_users():
 @app.route('/stores', methods=['GET'])
 def get_stores():
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Fetch all stores
@@ -195,7 +202,7 @@ def add_store():
         return jsonify({'error': 'Store name is required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Insert the new store
@@ -221,7 +228,7 @@ def edit_store():
         return jsonify({'error': 'Store ID and new name are required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Update the store name
@@ -244,7 +251,7 @@ def delete_store():
         return jsonify({'error': 'Store ID is required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Delete the store
@@ -269,7 +276,7 @@ def edit_user():
         return jsonify({'error': 'Old username is required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Update username, password, and category if provided
@@ -299,7 +306,7 @@ def delete_user():
         return jsonify({'error': 'Username is required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Delete the user
@@ -323,7 +330,7 @@ def add_user():
         return jsonify({'error': 'Username and password are required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Insert the new user
@@ -341,7 +348,7 @@ def add_user():
 @app.route('/items', methods=['GET'])
 def get_items():
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Fetch all items
@@ -365,7 +372,7 @@ def add_item():
         return jsonify({'error': 'Item name and category are required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Insert the new item
@@ -392,7 +399,7 @@ def edit_item():
         return jsonify({'error': 'Item ID is required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Update item details
@@ -422,7 +429,7 @@ def delete_item():
         return jsonify({'error': 'Item ID is required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Delete the item
@@ -438,7 +445,7 @@ def delete_item():
 @app.route('/expenses', methods=['GET'])
 def get_expenses():
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Fetch all expenses
@@ -474,7 +481,7 @@ def add_expense():
         return jsonify({'error': 'All fields are required'}), 400
 
     try:
-        conn = sqlite3.connect('users.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # Insert the new expense
