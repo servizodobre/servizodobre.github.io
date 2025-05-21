@@ -10,7 +10,7 @@
 /* Import the font from the fonts directory */
 @font-face {
     font-family: 'CustomFont';
-    src: url('fonts/Annie\ Use\ Your\ Telescope.ttf') format('truetype');
+    src: url('static/fonts/Annie\ Use\ Your\ Telescope.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -22,14 +22,28 @@ body {
     line-height: 1.6;
     background-color: var(--background-color);
     color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes full height */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
 /* Header and footer styles */
-header, footer {
+header {
     background-color: var(--primary-color);
     color: white;
     text-align: center;
-    padding: 10px 0;
+    padding: 10px 20px;
+    position: relative;
+}
+
+footer {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    position: relative;
+    width: 100%;
 }
 
 /* Logo styling */
@@ -38,7 +52,7 @@ header, footer {
     height: auto;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 10px;
+    margin-right: 0;
 }
 
 /* Header title styling */
@@ -51,12 +65,6 @@ header h1 {
 
 main {
     padding: 2rem;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
 }
 
 button {
