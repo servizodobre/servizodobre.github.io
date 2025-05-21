@@ -55,6 +55,31 @@ footer {
     margin-right: 0;
 }
 
+/* Menu styling */
+.menu {
+    display: flex; /* Use flexbox for menu items */
+    gap: 15px; /* Add spacing between menu items */
+    list-style: none; /* Remove default list styling */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+.menu li {
+    display: inline; /* Display menu items inline */
+}
+
+.menu a {
+    color: white; /* Menu text color */
+    text-decoration: none; /* Remove underline */
+    font-size: 1rem; /* Adjust font size */
+    font-weight: bold; /* Make text bold */
+    transition: color 0.3s ease; /* Smooth hover effect */
+}
+
+.menu a:hover {
+    color: #cccccc; /* Lighter color on hover */
+}
+
 /* Header title styling */
 header h1 {
     display: inline-block;
