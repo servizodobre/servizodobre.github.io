@@ -10,13 +10,13 @@
 /* Import the font from the fonts directory */
 @font-face {
     font-family: 'CustomFont';
-    src: url('static/fonts/Annie\ Use\ Your\ Telescope.ttf') format('truetype');
+    src: url('/static/fonts/Annie%20Use%20Your%20Telescope.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 body {
-    font-family: var(--font-family);
+    font-family: 'CustomFont', sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
@@ -64,6 +64,7 @@ header h1 {
 }
 
 main {
+    flex: 1; /* Allow main to grow and fill the available space */
     padding: 2rem;
 }
 
