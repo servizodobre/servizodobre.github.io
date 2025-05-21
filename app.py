@@ -20,6 +20,13 @@ UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', 'http://servizodobre.com')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+    return response
+
 # Serve the index.html from the templates directory
 @app.route('/')
 def index():
@@ -147,6 +154,14 @@ def login():
     except Exception as e:
         print('Error:', e)
         return jsonify({'error': 'An error occurred while processing the login'}), 500
+
+@app.route('/login', methods=['OPTIONS'])
+def login_options():
+    response = jsonify({'message': 'CORS preflight successful'})
+    response.headers.add('Access-Control-Allow-Origin', 'http://servizodobre.com')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'POST,OPTIONS')
+    return response
 
 @app.route('/users', methods=['GET'])
 def get_users():
