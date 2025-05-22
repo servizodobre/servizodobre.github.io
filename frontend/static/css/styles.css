@@ -10,7 +10,7 @@
 /* Import the font from the fonts directory */
 @font-face {
     font-family: 'CustomFont';
-    src: url('frontend/static/fonts/Annie%20Use%20Your%20Telescope.ttf') format('truetype');
+    src: url('../fonts/Annie%20Use%20Your%20Telescope.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
