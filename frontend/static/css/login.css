@@ -35,20 +35,22 @@ body {
 
 .branding h1 {
     font-size: 3rem;
-    color: #1877f2;
+    color: #0074D9;
     margin: 0;
 }
 
 .branding p {
     font-size: 1.2rem;
-    color: #606770;
+    color: #093D65;
     margin-top: 10px;
 }
 
 .branding .logo {
-    width: 300px; /* Adjust the width to make it larger */
+    width: 400px; /* Adjust the width to make it larger */
     height: auto; /* Maintain the aspect ratio */
     margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+    border-radius: 8px; /* Optional: Add rounded corners */
 }
 
 /* Right Section (Login Form) */
@@ -62,14 +64,17 @@ body {
 
 .login-form h1 {
     font-size: 1.8rem;
-    color: #333;
+    font-family: 'CustomFont', sans-serif;
+    color: #093D65;
     margin-bottom: 20px;
+    font-weight: 600;
 }
 
 .login-form label {
     display: block;
     font-size: 0.9rem;
-    color: #333;
+    font-family: 'CustomFont', sans-serif;
+    color: #093D65;
     margin-bottom: 5px;
 }
 
@@ -80,35 +85,39 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
+    font-family: 'CustomFont', sans-serif;
 }
 
 .login-form button {
     width: 100%;
     padding: 10px;
-    background-color: #1877f2;
+    background-color: #0074D9;
     color: #fff;
     font-size: 1rem;
+    font-family: 'CustomFont', sans-serif;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .login-form button:hover {
-    background-color: #165dbb;
+    background-color: #093D65;
 }
 
 .login-form p {
     text-align: center;
     margin-top: 15px;
     font-size: 0.9rem;
+    font-family: 'CustomFont', sans-serif;
 }
 
 .login-form p button {
     background: none;
     border: none;
-    color: #1877f2;
+    color: #0074D9;
     cursor: pointer;
     font-size: 0.9rem;
+    font-family: 'CustomFont', sans-serif;
 }
 
 .login-form p button:hover {
