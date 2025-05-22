@@ -6,7 +6,7 @@ document.getElementById('login-button').addEventListener('click', () => {
     const password = document.getElementById('password').value;
 
     if (username && password) { // Ensure username and password are filled
-        fetch(`${BACKEND_URL}/login`, { // Use the backend URL
+        fetch(`${BACKEND_URL}/auth/login`, { // Use the backend URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

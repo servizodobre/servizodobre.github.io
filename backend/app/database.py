@@ -1,6 +1,6 @@
 import sqlite3
 
-DATABASE_PATH = 'data/users.db'
+DATABASE_PATH = '/backend/data/users.db'
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE_PATH)
