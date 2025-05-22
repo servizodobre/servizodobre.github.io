@@ -1,6 +1,14 @@
+/* Define the custom font */
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/frontend/static/fonts/Annie\ Use\ Your\ Telescope.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* General Page Styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'CustomFont', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f0f2f5;
@@ -35,6 +43,12 @@ body {
     font-size: 1.2rem;
     color: #606770;
     margin-top: 10px;
+}
+
+.branding .logo {
+    width: 300px; /* Adjust the width to make it larger */
+    height: auto; /* Maintain the aspect ratio */
+    margin-bottom: 10px;
 }
 
 /* Right Section (Login Form) */
