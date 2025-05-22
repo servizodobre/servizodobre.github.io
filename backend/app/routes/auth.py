@@ -22,3 +22,18 @@ def register():
     except sqlite3.IntegrityError:
         return jsonify({'error': 'Username already exists'}), 400
 
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({'error': 'Username and password are required'}), 400
+
+    # Example: Validate username and password (replace with database logic)
+    if username == 'testuser' and password == 'testpassword':
+        return jsonify({'message': 'Login successful', 'username': username})
+    else:
+        return jsonify({'error': 'Invalid username or password'}), 401
+
