@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Servizodobre</title>
+    <link rel="stylesheet" href="/frontend/static/css/login.css"> <!-- Link to the new login.css -->
+    <link rel="icon" href="/frontend/static/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- Branding Section -->
+        <div class="branding">
+            <img src="/frontend/static/images/logo-color.png" alt="Servizodobre Logo" class="logo">
+            <p>Your trusted partner for exceptional services.</p>
+        </div>
+
+        <!-- Login Form Section -->
+        <div class="login-form">
+            <h1>Login</h1>
+            <form id="login-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <button type="button" id="login-button">Login</button>
+            </form>
+            <p>Don't have an account? <button id="signup-button">Sign Up</button></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signup-button').addEventListener('click', () => {
+            window.location.href = 'register.html'; // Redirect to register page
+        });
+
+        document.getElementById('login-button').addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch('http://127.0.0.1:5000/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then((data) => {
+                if (data.error) {
+                    alert(`Error: ${data.error}`);
+                } else {
+                    const category = data.category;
+                    if (category === 'admin') {
+                        window.location.href = '/frontend/admin.html';
+                    } else {
+                        window.location.href = '/frontend/profile.html';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

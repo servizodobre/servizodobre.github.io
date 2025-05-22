@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Your Profile</h1>
+    </header>
+    <main>
+        <p id="welcome-message"></p>
+        <section id="expense-management">
+            <h2>Daily Expenses</h2>
+            <form id="expense-form">
+                <label for="expense-date">Date:</label>
+                <input type="date" id="expense-date" name="date" required>
+
+                <label for="expense-store">Store:</label>
+                <select id="expense-store" name="store" required>
+                    <option value="" disabled selected>Select a store from list</option>
+                </select>
+
+                <label for="expense-item">Item:</label>
+                <select id="expense-item" name="item" required>
+                    <option value="" disabled selected>Select an item from list</option>
+                </select>
+
+                <label for="expense-quantity">Quantity:</label>
+                <input type="number" id="expense-quantity" name="quantity" min="1" required>
+
+                <label for="expense-price">Price (CAD):</label>
+                <input type="number" id="expense-price" name="price" step="0.01" required>
+
+                <label for="expense-bucket">Expense Bucket:</label>
+                <input type="text" id="expense-bucket" name="bucket" required>
+
+                <button type="button" id="add-expense-button">Add Expense</button>
+            </form>
+
+            <div id="expense-list">
+                <h3>Expenses</h3>
+                <!-- Expenses will be dynamically loaded here -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Servizodobre. All rights reserved.</p>
+    </footer>
+    <script>
+        // Retrieve username from localStorage
+        const username = localStorage.getItem('username');
+        document.getElementById('welcome-message').textContent = `Welcome, ${username}!`;
+    </script>
+    <script src="js/profile.js"></script>
+</body>
+</html>
