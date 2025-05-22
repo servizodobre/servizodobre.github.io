@@ -29,6 +29,8 @@ def register():
         return jsonify({'error': f'An unexpected error occurred: {str(e)}'}), 500
 
 
+
+
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -36,7 +38,9 @@ def login():
     password = data.get('password')
 
     if not username or not password:
-        return jsonify({'error': 'Username and password are required'}), 400
+        response = jsonify({'error': 'Username and password are required'})
+        response.headers.add('Access-Control-Allow-Origin', 'https://servizodobre.com')
+        return response, 400
 
     try:
         conn = get_db_connection()
@@ -50,9 +54,24 @@ def login():
 
         if result:
             category = result[0]
-            return jsonify({'message': 'Login successful', 'username': username, 'category': category})
+            response = jsonify({'message': 'Login successful', 'username': username, 'category': category})
+            response.headers.add('Access-Control-Allow-Origin', 'https://servizodobre.com')
+            return response
         else:
-            return jsonify({'error': 'Invalid username or password'}), 401
+            response = jsonify({'error': 'Invalid username or password'})
+            response.headers.add('Access-Control-Allow-Origin', 'https://servizodobre.com')
+            return response, 401
     except Exception as e:
-        return jsonify({'error': f'An unexpected error occurred: {str(e)}'}), 500
+        response = jsonify({'error': f'An unexpected error occurred: {str(e)}'})
+        response.headers.add('Access-Control-Allow-Origin', 'https://servizodobre.com')
+        return response, 500
+
+
+@auth_bp.route('/login', methods=['OPTIONS'])
+def login_options():
+    response = jsonify({'message': 'CORS preflight successful'})
+    response.headers.add('Access-Control-Allow-Origin', 'https://servizodobre.com')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'POST,OPTIONS')
+    return response
 

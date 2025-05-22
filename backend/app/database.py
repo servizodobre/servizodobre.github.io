@@ -1,6 +1,9 @@
+import os
 import sqlite3
 
-DATABASE_PATH = '/backend/data/users.db'
+# Dynamically construct the database path relative to this file
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE_PATH = os.path.join(BASE_DIR, '../data/users.db')
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE_PATH)
