@@ -8,6 +8,19 @@
     <link rel="icon" href="/frontend/static/favicon.ico" type="image/x-icon">
     </head>
 <body>
+    <header>
+        <div id="header-container">
+            <img src="/frontend/static/images/logo-color.png" alt="Servizodobre Logo" id="logo">
+            <nav id="menu">
+                <a href="#home">Home</a>
+                <a href="#projects">Projects</a>
+                <a href="#clients">Clients</a>
+                <a href="#contact">Contact</a>
+                <a href="/frontend/invoices.html">Invoices</a>
+                <a href="/frontend/login.html">Login</a>
+            </nav>
+        </div>
+    </header>
     <div class="container">
         <!-- Branding Section -->
         <div class="branding">
@@ -28,7 +41,9 @@
             <p>Don't have an account? <button id="signup-button">Sign Up</button></p>
         </div>
     </div>
-
+    <footer>
+        <p>&copy; 2025 Servizodobre. All rights reserved.</p>
+    </footer>
     <script>
                 document.getElementById('signup-button').addEventListener('click', () => {
             window.location.href = 'register.html'; // Redirect to register page
