@@ -6,74 +6,59 @@
     <title>Login - Servizodobre</title>
     <link rel="stylesheet" href="/frontend/static/css/login.css"> <!-- Link to the new login.css -->
     <link rel="icon" href="/frontend/static/favicon.ico" type="image/x-icon">
-    </head>
+</head>
 <body>
-    <header>
-        <div id="header-container">
-            <img src="/frontend/static/images/logo-color.png" alt="Servizodobre Logo" id="logo">
-            <nav id="menu">
-                <a href="#home">Home</a>
-                <a href="#projects">Projects</a>
-                <a href="#clients">Clients</a>
-                <a href="#contact">Contact</a>
-                <a href="/frontend/invoices.html">Invoices</a>
-                <a href="/frontend/login.html">Login</a>
-            </nav>
-        </div>
-    </header>
-    <div class="container">
-        <!-- Branding Section -->
+            <div class="container">
+            <!-- Branding Section -->
         <div class="branding">
-            <img src="/frontend/static/images/logo-color.png" alt="Servizodobre Logo" class="logo">
-            <p>Your trusted partner for exceptional services.</p>
+             <img src="/frontend/static/images/logo-color.png" alt="Servizodobre Logo" class="logo">
+<p>Your trusted partner for exceptional services.</p>
         </div>
-
+    
         <!-- Login Form Section -->
         <div class="login-form">
-            <h1>Login</h1>
+            <h1>Knock, Knock, Who's There?</h1>
             <form id="login-form">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                <button type="button" id="login-button">Login</button>
+                <button type="button" id="login-button">You know who, then Come On In!</button>
             </form>
-            <p>Don't have an account? <button id="signup-button">Sign Up</button></p>
+            <p>Don't know who? Then click on the button to Sign Up! <button id="signup-button">Sign Up</button></p>
         </div>
-    </div>
-    <footer>
-        <p>&copy; 2025 Servizodobre. All rights reserved.</p>
-    </footer>
-    <script>
-                document.getElementById('signup-button').addEventListener('click', () => {
-            window.location.href = 'register.html'; // Redirect to register page
-        });
+        </div>
 
-        document.getElementById('login-button').addEventListener('click', () => {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            fetch('http://127.0.0.1:5000/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            })
-            .then(response => response.json())
-            .then((data) => {
-                if (data.error) {
-                    alert(`Error: ${data.error}`);
-                } else {
-                    const category = data.category;
-                    if (category === 'admin') {
-                        window.location.href = '/frontend/admin.html';
-                    } else if (category === 'user'){
-                        window.location.href = '/frontend/profile.html';
-                    }
-                }
+        <script>
+            document.getElementById('signup-button').addEventListener('click', () => {
+                window.location.href = 'register.html'; // Redirect to register page
             });
-        });
-    </script>
-</body>
+
+            document.getElementById('login-button').addEventListener('click', () => {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                fetch('http://127.0.0.1:5000/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                })
+                .then(response => response.json())
+                .then((data) => {
+                    if (data.error) {
+                        alert(`Error: ${data.error}`);
+                    } else {
+                        const category = data.category;
+       if (category === 'admin') {
+                      window.location.href = '/frontend/admin.html';
+                        } else if (category === 'user'){
+                            window.location.href = '/frontend/profile.html';
+                                            }
+}
+                });
+            });
+        </script>
+    </body>
 </html>
