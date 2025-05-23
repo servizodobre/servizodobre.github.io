@@ -27,6 +27,11 @@ body {
     height: 100vh;
 }
 
+/* Apply the same font throughout the login page */
+body, input, button, p, h1, label {
+    font-family: var(--font-family);
+}
+
 /* Container for the entire page */
 .container {
     display: flex;
@@ -60,6 +65,11 @@ body {
     margin-bottom: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
     border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+/* Add hover effect for the logo */
+.logo:hover {
+    cursor: pointer;
 }
 
 /* Right Section (Login Form) */
