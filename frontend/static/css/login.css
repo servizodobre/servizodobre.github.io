@@ -1,14 +1,23 @@
-/* Define the custom font */
+/* Define a consistent theme using CSS variables */
+:root {
+    --primary-color: #0074D9;
+    --secondary-color: #093D65;
+    --background-color: #ffffff;
+    --text-color: #093D65;
+    --font-family: 'CustomFont', sans-serif;
+}
+
+/* Import the font from the fonts directory */
 @font-face {
     font-family: 'CustomFont';
-    src: url('/frontend/static/fonts/Annie\ Use\ Your\ Telescope.ttf') format('truetype');
+    src: url('/frontend/static/fonts/Annie%20Use%20Your%20Telescope.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 /* General Page Styling */
 body {
-    font-family: 'CustomFont', sans-serif;
+    /* font-family: 'CustomFont', sans-serif; */
     margin: 0;
     padding: 0;
     background-color: #f0f2f5;
@@ -40,7 +49,7 @@ body {
 }
 
 .branding p {
-    font-size: 1.2rem;
+    font-size: 2rem;
     color: #093D65;
     margin-top: 10px;
 }
@@ -64,8 +73,8 @@ body {
 
 .login-form h1 {
     font-size: 4rem;
-    font-family: 'CustomFont', sans-serif;
-    color: #093D65;
+    /*font-family: 'CustomFont', sans-serif;
+    color: #093D65;*/
     margin-bottom: 20px;
     font-weight: 600;
 }
@@ -73,8 +82,8 @@ body {
 .login-form label {
     display: block;
     font-size: 1.5rem;
-    font-family: 'CustomFont', sans-serif;
-    color: #093D65;
+    /*font-family: 'CustomFont', sans-serif;
+    color: #093D65; */
     margin-bottom: 5px;
 }
 
@@ -85,7 +94,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
-    font-family: 'CustomFont', sans-serif;
+    /*font-family: 'CustomFont', sans-serif;*/
 }
 
 .login-form button {
@@ -93,8 +102,8 @@ body {
     padding: 10px;
     background-color: #0074D9;
     color: #fff;
-    font-size: 2rem;
-    font-family: 'CustomFont', sans-serif;
+    font-size: 1.8rem;
+    /*font-family: 'CustomFont', sans-serif;*/
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -108,7 +117,7 @@ body {
     text-align: center;
     margin-top: 15px;
     font-size: 1.8rem;
-    font-family: 'CustomFont', sans-serif;
+    /*font-family: 'CustomFont', sans-serif;*/
 }
 
 .login-form p button {
@@ -117,7 +126,7 @@ body {
     color: #0074D9;
     cursor: pointer;
     font-size: 2rem;
-    font-family: 'CustomFont', sans-serif;
+    /*font-family: 'CustomFont', sans-serif;*/
 }
 
 .login-form p button:hover {
