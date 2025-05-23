@@ -28,37 +28,6 @@
             <p>Don't know who? Then click on the button to Sign Up! <button id="signup-button">Sign Up</button></p>
         </div>
         </div>
-
-        <script>
-            document.getElementById('signup-button').addEventListener('click', () => {
-                window.location.href = 'register.html'; // Redirect to register page
-            });
-
-            document.getElementById('login-button').addEventListener('click', () => {
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-
-                fetch('http://127.0.0.1:5000/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ username, password })
-                })
-                .then(response => response.json())
-                .then((data) => {
-                    if (data.error) {
-                        alert(`Error: ${data.error}`);
-                    } else {
-                        const category = data.category;
-       if (category === 'admin') {
-                      window.location.href = '/frontend/admin.html';
-                        } else if (category === 'user'){
-                            window.location.href = '/frontend/profile.html';
-                                            }
-}
-                });
-            });
-        </script>
+        <script src="/frontend/static/js/login.js"></script> <!-- Link to external login.js -->
     </body>
 </html>

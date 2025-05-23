@@ -32,9 +32,9 @@ document.getElementById('login-button').addEventListener('click', () => {
 
                     // Redirect based on category
                     if (category === 'admin') {
-                        window.location.href = 'frontend/admin.html'; // Redirect to admin page
+                        window.location.href = 'admin.html'; // Redirect to admin page
                     } else {
-                        window.location.href = 'frontend/profile.html'; // Redirect to profile page
+                        window.location.href = 'profile.html'; // Redirect to profile page
                     }
                 }
             })
