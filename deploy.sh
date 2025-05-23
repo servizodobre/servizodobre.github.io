@@ -4,8 +4,8 @@
 cd /Users/servizodobre/git/servizodobre.github.io
 
 # Step 2: Copy html files to the templates folder
-cp index.html backend/app/templates/index.html
-cp frontend/*.html backend/app/templates/.
+#cp index.html backend/app/templates/index.html
+#cp frontend/*.html backend/app/templates/.
 
 # Step 3: Commit and push to GitHub
 git add .
