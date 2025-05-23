@@ -54,14 +54,14 @@ body, input, button, p, h1, label {
 }
 
 .branding p {
-    font-size: 2rem;
+    font-size: 1.2rem;
     color: #093D65;
     margin-top: 10px;
 }
 
 .branding .logo {
-    width: 300px; /* Adjust the width to make it larger */
-    height: auto; /* Maintain the aspect ratio */
+    width: 300px; 
+    height: auto; 
     margin-bottom: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
     border-radius: 8px; /* Optional: Add rounded corners */
@@ -82,9 +82,7 @@ body, input, button, p, h1, label {
 }
 
 .login-form h1 {
-    font-size: 4rem;
-    /*font-family: 'CustomFont', sans-serif;
-    color: #093D65;*/
+    font-size: 2rem;
     margin-bottom: 20px;
     font-weight: 600;
 }
@@ -92,8 +90,6 @@ body, input, button, p, h1, label {
 .login-form label {
     display: block;
     font-size: 1.5rem;
-    /*font-family: 'CustomFont', sans-serif;
-    color: #093D65; */
     margin-bottom: 5px;
 }
 
@@ -104,7 +100,6 @@ body, input, button, p, h1, label {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
-    /*font-family: 'CustomFont', sans-serif;*/
 }
 
 .login-form button {
@@ -112,8 +107,7 @@ body, input, button, p, h1, label {
     padding: 10px;
     background-color: #0074D9;
     color: #fff;
-    font-size: 1.8rem;
-    /*font-family: 'CustomFont', sans-serif;*/
+    font-size: 1.2rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -126,7 +120,7 @@ body, input, button, p, h1, label {
 .login-form p {
     text-align: center;
     margin-top: 15px;
-    font-size: 1.8rem;
+    font-size: 1rem;
     /*font-family: 'CustomFont', sans-serif;*/
 }
 
@@ -135,7 +129,7 @@ body, input, button, p, h1, label {
     border: none;
     color: #0074D9;
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 1.2rem;
     /*font-family: 'CustomFont', sans-serif;*/
 }
 
