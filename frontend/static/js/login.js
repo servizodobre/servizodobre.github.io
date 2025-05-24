@@ -24,7 +24,6 @@ document.getElementById('login-button').addEventListener('click', () => {
                     alert(`Error: ${data.error}`);
                 } else {
                     const category = data.category; // Fetch category from the server response
-                    alert(data.message);
 
                     // Store username and category in localStorage
                     localStorage.setItem('username', username);
