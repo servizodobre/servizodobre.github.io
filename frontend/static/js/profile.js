@@ -37,8 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function fetchStores() {
     const storeDropdown = document.getElementById('expense-store');
-    //fetch('http://127.0.0.1:5000/stores') // Replace with your backend endpoint
-    fetch(`${BACKEND_URL}/expense/stores`)
+    fetch(`${BACKEND_URL}/expense/stores`) // Correct backend URL for stores
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -46,7 +45,7 @@ function fetchStores() {
             return response.json();
         })
         .then((data) => {
-            storeDropdown.innerHTML = '<option value="" disabled selected>Select a store</option>'; // Reset dropdown
+            storeDropdown.innerHTML = '<option value="" disabled selected>Select a store</option>';
             data.stores.forEach((store) => {
                 const option = document.createElement('option');
                 option.value = store.name;
@@ -61,7 +60,7 @@ function fetchStores() {
 
 function fetchItems() {
     const itemDropdown = document.getElementById('expense-item');
-    fetch(`${BACKEND_URL}/expense/items`) // Replace with your backend endpoint
+    fetch(`${BACKEND_URL}/expense/items`) // Correct backend URL for items
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -69,7 +68,7 @@ function fetchItems() {
             return response.json();
         })
         .then((data) => {
-            itemDropdown.innerHTML = '<option value="" disabled selected>Select an item</option>'; // Reset dropdown
+            itemDropdown.innerHTML = '<option value="" disabled selected>Select an item</option>';
             data.items.forEach((item) => {
                 const option = document.createElement('option');
                 option.value = item.name;
