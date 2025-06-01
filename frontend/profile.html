@@ -24,23 +24,33 @@
             <div class="expense-entry">
                 <h2>Enter Daily Expenses</h2>
                 <form id="expense-form">
-                    <label for="expense-date">Date:</label>
-                    <input type="date" id="expense-date" name="date" required>
+                    <div class="form-row">
+                        <label for="expense-date">Date:</label>
+                        <input type="date" id="expense-date" name="date" value="<?php echo date('Y-m-d'); ?>" required>
 
-                    <label for="expense-store">Store:</label>
-                    <input type="text" id="expense-store" name="store" placeholder="Enter store name" required>
+                        <label for="expense-bucket">Expense Bucket:</label>
+                        <input type="text" id="expense-bucket" name="bucket" placeholder="e.g., Food, Transport" required>
+                    </div>
 
-                    <label for="expense-item">Item:</label>
-                    <input type="text" id="expense-item" name="item" placeholder="Enter item name" required>
+                    <div class="form-row">
+                        <label for="expense-store">Store:</label>
+                        <select id="expense-store" name="store" required>
+                            <option value="" disabled selected>Select a store</option>
+                        </select>
 
-                    <label for="expense-quantity">Quantity:</label>
-                    <input type="number" id="expense-quantity" name="quantity" min="1" required>
+                        <label for="expense-item">Item:</label>
+                        <select id="expense-item" name="item" required>
+                            <option value="" disabled selected>Select an item</option>
+                        </select>
+                    </div>
 
-                    <label for="expense-price">Price (CAD):</label>
-                    <input type="number" id="expense-price" name="price" step="0.01" required>
+                    <div class="form-row">
+                        <label for="expense-quantity">Quantity:</label>
+                        <input type="number" id="expense-quantity" name="quantity" value="1" min="1" required>
 
-                    <label for="expense-bucket">Expense Bucket:</label>
-                    <input type="text" id="expense-bucket" name="bucket" placeholder="e.g., Food, Transport" required>
+                        <label for="expense-price">Price (CAD):</label>
+                        <input type="number" id="expense-price" name="price" step="0.01" required>
+                    </div>
 
                     <button type="button" id="add-expense-button">Add Expense</button>
                 </form>

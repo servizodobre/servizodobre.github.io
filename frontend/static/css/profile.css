@@ -1,15 +1,32 @@
+/* Define a consistent theme using CSS variables */
+:root {
+    --primary-color: #0074D9;
+    --secondary-color: #093D65;
+    --background-color: #ffffff;
+    --text-color: #093D65;
+    --font-family: 'CustomFont', sans-serif;
+}
+
+/* Import the font from the fonts directory */
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/frontend/static/fonts/Annie%20Use%20Your%20Telescope.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* General styles */
 body {
-    font-family: 'Arial', sans-serif;
+    /* font-family: 'Arial', sans-serif; */
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
+    /* background-color: #f9f9f9; */
+    /* color: #333; */
 }
 
 .dashboard-header {
-    background-color: var(--primary-color);
-    color: white;
+    /* background-color: var(--primary-color);
+    color: white; */
     text-align: center;
     padding: 20px;
 }
@@ -45,25 +62,27 @@ section {
 #welcome-section {
     grid-column: span 2;
     text-align: center;
-    background-color: var(--secondary-color);
-    color: white;
+    /* background-color: var(--secondary-color);
+    color: white; */
     padding: 20px;
     border-radius: 8px;
 }
 
 #expense-management {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    display: flex; /* Use flexbox for horizontal alignment */
+    flex-direction: row; /* Align sections side by side */
+    gap: 20px; /* Add spacing between the sections */
 }
 
 .expense-entry {
+    flex: 1; /* Take up equal space */
     background-color: #f1f1f1;
     padding: 20px;
     border-radius: 8px;
 }
 
 .expense-display {
+    flex: 1; /* Take up equal space */
     background-color: #f1f1f1;
     padding: 20px;
     border-radius: 8px;

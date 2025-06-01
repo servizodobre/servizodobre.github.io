@@ -41,13 +41,13 @@ def init_db():
         CREATE TABLE IF NOT EXISTS expenses (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             date TEXT NOT NULL,
-            store_id INTEGER NOT NULL,
-            item_id INTEGER NOT NULL,
+            store_name INTEGER NOT NULL,
+            item_name INTEGER NOT NULL,
             quantity INTEGER NOT NULL,
             price REAL NOT NULL,
             bucket TEXT NOT NULL,
-            FOREIGN KEY (store_id) REFERENCES stores (id),
-            FOREIGN KEY (item_id) REFERENCES items (id)
+            FOREIGN KEY (store_name) REFERENCES stores (name),
+            FOREIGN KEY (item_name) REFERENCES items (name)
         )
     ''')
 
