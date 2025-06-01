@@ -16,7 +16,7 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(users_bp, url_prefix='/users')
-    app.register_blueprint(expense_bp, url_prßefix='/expense')
+    app.register_blueprint(expense_bp, url_prefix='/expense')
 
     return app
 
