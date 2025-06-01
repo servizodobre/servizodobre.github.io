@@ -4,13 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const username = localStorage.getItem('username');
     const category = localStorage.getItem('category');
 
+    // Redirect to login if user is not valid
     if (!username || category !== 'user') {
-        // Redirect to login page if no valid user is logged in
         window.location.href = 'login.html';
     } else {
-        // Display welcome message for the user
+        // Display welcome message
         const welcomeMessage = document.getElementById('welcome-message');
         welcomeMessage.textContent = `Welcome, ${username}!`;
+
+        // Fetch and display expenses
+        fetchExpenses();
     }
 
     const fetchStores = () => {
@@ -80,23 +83,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch and display expenses
     const fetchExpenses = () => {
-        fetch('http://127.0.0.1:5000/expenses')
-            .then((response) => response.json())
-            .then((data) => {
-                const expenseList = document.getElementById('expense-list');
-                expenseList.innerHTML = '<h3>Expenses</h3>'; // Reset the list
+        const expenseList = document.getElementById('expense-list');
+        expenseList.innerHTML = '<p>Loading expenses...</p>'; // Show loading message
 
-                data.expenses.forEach((expense) => {
-                    const expenseDiv = document.createElement('div');
-                    expenseDiv.className = 'expense-item';
-                    expenseDiv.innerHTML = `
-                        <span>${expense.date} - ${expense.store} - ${expense.item} - ${expense.quantity} x $${expense.price.toFixed(2)} CAD (${expense.bucket})</span>
-                    `;
-                    expenseList.appendChild(expenseDiv);
-                });
+        fetch('http://127.0.0.1:5000/expenses') // Replace with your backend endpoint
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                expenseList.innerHTML = ''; // Clear loading message
+
+                if (data.expenses && data.expenses.length > 0) {
+                    data.expenses.forEach((expense) => {
+                        const expenseItem = document.createElement('div');
+                        expenseItem.className = 'expense-item';
+                        expenseItem.innerHTML = `
+                            <p><strong>Date:</strong> ${expense.date}</p>
+                            <p><strong>Store:</strong> ${expense.store}</p>
+                            <p><strong>Item:</strong> ${expense.item}</p>
+                            <p><strong>Quantity:</strong> ${expense.quantity}</p>
+                            <p><strong>Price:</strong> CAD ${expense.price.toFixed(2)}</p>
+                            <p><strong>Bucket:</strong> ${expense.bucket}</p>
+                        `;
+                        expenseList.appendChild(expenseItem);
+                    });
+                } else {
+                    expenseList.innerHTML = '<p>No expenses added yet.</p>';
+                }
             })
             .catch((error) => {
                 console.error('Error fetching expenses:', error);
+                expenseList.innerHTML = '<p>Error loading expenses. Please try again later.</p>';
             });
     };
 
@@ -133,5 +153,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial fetches
     fetchStores();
     fetchItems();
-    fetchExpenses();
 });
