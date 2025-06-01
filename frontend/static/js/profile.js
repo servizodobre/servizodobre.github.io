@@ -12,9 +12,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const welcomeMessage = document.getElementById('welcome-message');
         welcomeMessage.textContent = `Welcome, ${username}!`;
 
+        // Set default date to today
+        const dateField = document.getElementById('expense-date');
+        const today = new Date().toISOString().split('T')[0];
+        dateField.value = today;
+
         // Fetch stores and items for dropdowns
         fetchStores();
         fetchItems();
+
+        // Add event listeners for quantity and price fields
+        const quantityField = document.getElementById('expense-quantity');
+        const priceField = document.getElementById('expense-price');
+        const totalField = document.getElementById('expense-total');
+
+        quantityField.addEventListener('input', () => updateTotal(quantityField, priceField, totalField));
+        priceField.addEventListener('input', () => updateTotal(quantityField, priceField, totalField));
     }
 });
 
@@ -136,3 +149,9 @@ document.getElementById('add-expense-button').addEventListener('click', () => {
 // Initial fetches
 fetchStores();
 fetchItems();
+
+function updateTotal(quantityField, priceField, totalField) {
+    const quantity = parseFloat(quantityField.value) || 0;
+    const price = parseFloat(priceField.value) || 0;
+    totalField.value = (quantity * price).toFixed(2);
+}

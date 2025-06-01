@@ -26,7 +26,7 @@
                 <form id="expense-form">
                     <div class="form-row">
                         <label for="expense-date">Date:</label>
-                        <input type="date" id="expense-date" name="date" value="<?php echo date('Y-m-d'); ?>" required>
+                        <input type="date" id="expense-date" name="date" required>
 
                         <label for="expense-bucket">Expense Bucket:</label>
                         <input type="text" id="expense-bucket" name="bucket" placeholder="e.g., Food, Transport" required>
@@ -50,6 +50,9 @@
 
                         <label for="expense-price">Price (CAD):</label>
                         <input type="number" id="expense-price" name="price" step="0.01" required>
+
+                        <label for="expense-total">Total (CAD):</label>
+                        <input type="number" id="expense-total" name="total" readonly>
                     </div>
 
                     <button type="button" id="add-expense-button">Add Expense</button>

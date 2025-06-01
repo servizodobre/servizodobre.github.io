@@ -15,6 +15,11 @@
     font-style: normal;
 }
 
+/* Apply the same font throughout the page */
+body, input, button, p, h1, label, section, h2 {
+    font-family: var(--font-family);
+}
+
 /* General styles */
 body {
     /* font-family: 'Arial', sans-serif; */
@@ -72,6 +77,10 @@ section {
     display: flex; /* Use flexbox for horizontal alignment */
     flex-direction: row; /* Align sections side by side */
     gap: 20px; /* Add spacing between the sections */
+    width: 100%; /* Match the width of the banner */
+    max-width: 1200px; /* Same as the banner's max width */
+    margin: 0 auto; /* Center the section horizontally */
+    padding: 20px; /* Add padding for better spacing */
 }
 
 .expense-entry {
