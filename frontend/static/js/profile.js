@@ -1,3 +1,7 @@
+// Define the backend URL
+const BACKEND_URL = 'http://127.0.0.1:5000';
+
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed'); // Debugging log
 
@@ -33,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function fetchStores() {
     const storeDropdown = document.getElementById('expense-store');
-    fetch('http://127.0.0.1:5000/stores') // Replace with your backend endpoint
+    //fetch('http://127.0.0.1:5000/stores') // Replace with your backend endpoint
+    fetch(`${BACKEND_URL}/expense/stores`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -56,7 +61,7 @@ function fetchStores() {
 
 function fetchItems() {
     const itemDropdown = document.getElementById('expense-item');
-    fetch('http://127.0.0.1:5000/items') // Replace with your backend endpoint
+    fetch(`${BACKEND_URL}/expense/items`) // Replace with your backend endpoint
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

@@ -81,20 +81,15 @@ section {
     max-width: 1200px; /* Same as the banner's max width */
     margin: 0 auto; /* Center the section horizontally */
     padding: 20px; /* Add padding for better spacing */
+    justify-content: space-between; /* Ensure sections take up the full width */
 }
 
-.expense-entry {
-    flex: 1; /* Take up equal space */
+.expense-entry, .expense-display {
+    flex: 1; /* Ensure both sections take up equal space */
     background-color: #f1f1f1;
     padding: 20px;
     border-radius: 8px;
-}
-
-.expense-display {
-    flex: 1; /* Take up equal space */
-    background-color: #f1f1f1;
-    padding: 20px;
-    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add subtle shadow for better visibility */
 }
 
 #budget-management {

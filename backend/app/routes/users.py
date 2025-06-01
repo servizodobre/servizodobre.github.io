@@ -8,10 +8,6 @@ users = [
     {"username": "user1", "password": "user123", "category": "user"}
 ]
 
-# Mock data for demonstration purposes
-stores = [{"name": "Supermarket"}, {"name": "Gas Station"}, {"name": "Electronics Store"}]
-items = [{"name": "Milk"}, {"name": "Fuel"}, {"name": "Laptop"}]
-
 @users_bp.route('/users', methods=['GET'])
 def get_users():
     return jsonify({"users": users})
@@ -61,11 +57,4 @@ def delete_user():
 
     return jsonify({"message": "User not found."}), 404
 
-@users_bp.route('/stores', methods=['GET'])
-def get_stores():
-    return jsonify({"stores": stores})
-
-@users_bp.route('/items', methods=['GET'])
-def get_items():
-    return jsonify({"items": items})
 
