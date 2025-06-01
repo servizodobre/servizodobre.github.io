@@ -1,17 +1,19 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify
+from app.database import get_db_connection
 
 expense_bp = Blueprint('expense', __name__)
 
-# Mock data for demonstration purposes
-stores = [{"name": "Supermarket"}, {"name": "Gas Station"}, {"name": "Electronics Store"}]
-items = [{"name": "Milk"}, {"name": "Fuel"}, {"name": "Laptop"}]
-
-
 @expense_bp.route('/stores', methods=['GET'])
 def get_stores():
-    return jsonify({"stores": stores})
+    conn = get_db_connection()
+    stores = conn.execute('SELECT name FROM stores').fetchall()
+    conn.close()
+    return jsonify({"stores": [dict(store) for store in stores]})
 
 @expense_bp.route('/items', methods=['GET'])
 def get_items():
-    return jsonify({"items": items})
+    conn = get_db_connection()
+    items = conn.execute('SELECT name FROM items').fetchall()
+    conn.close()
+    return jsonify({"items": [dict(item) for item in items]})
 

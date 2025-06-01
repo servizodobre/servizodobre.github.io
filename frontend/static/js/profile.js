@@ -37,13 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function fetchStores() {
     const storeDropdown = document.getElementById('expense-store');
-    fetch(`${BACKEND_URL}/expense/stores`) // Correct backend URL for stores
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
+    fetch('http://127.0.0.1:5000/expense/stores')
+        .then((response) => response.json())
         .then((data) => {
             storeDropdown.innerHTML = '<option value="" disabled selected>Select a store</option>';
             data.stores.forEach((store) => {
@@ -53,20 +48,13 @@ function fetchStores() {
                 storeDropdown.appendChild(option);
             });
         })
-        .catch((error) => {
-            console.error('Error fetching stores:', error);
-        });
+        .catch((error) => console.error('Error fetching stores:', error));
 }
 
 function fetchItems() {
     const itemDropdown = document.getElementById('expense-item');
-    fetch(`${BACKEND_URL}/expense/items`) // Correct backend URL for items
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
+    fetch('http://127.0.0.1:5000/expense/items')
+        .then((response) => response.json())
         .then((data) => {
             itemDropdown.innerHTML = '<option value="" disabled selected>Select an item</option>';
             data.items.forEach((item) => {
@@ -76,9 +64,7 @@ function fetchItems() {
                 itemDropdown.appendChild(option);
             });
         })
-        .catch((error) => {
-            console.error('Error fetching items:', error);
-        });
+        .catch((error) => console.error('Error fetching items:', error));
 }
 
 // Fetch and display expenses
