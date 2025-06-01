@@ -3,51 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+    <title>Personal Finance Dashboard</title>
     <link rel="stylesheet" href="/frontend/static/css/profile.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to Your Profile</h1>
+    <header class="dashboard-header">
+        <div class="branding">
+            <a href="/index.html">
+                <img src="/frontend/static/images/logo-color.png" alt="Servizodobre Logo" class="logo">
+            </a>
+            <h1>Personal Finance Dashboard</h1>
+        </div>
     </header>
-    <main>
-        <p id="welcome-message"></p>
-        
+    <main class="dashboard-main">
+        <section id="welcome-section">
+            <p id="welcome-message"></p>
+        </section>
+
         <section id="expense-management">
-            <h2>Daily Expenses</h2>
-            <form id="expense-form">
-                <label for="expense-date">Date:</label>
-                <input type="date" id="expense-date" name="date" required>
+            <div class="expense-entry">
+                <h2>Enter Daily Expenses</h2>
+                <form id="expense-form">
+                    <label for="expense-date">Date:</label>
+                    <input type="date" id="expense-date" name="date" required>
 
-                <label for="expense-store">Store:</label>
-                <select id="expense-store" name="store" required>
-                    <option value="" disabled selected>Select a store from list</option>
-                </select>
+                    <label for="expense-store">Store:</label>
+                    <input type="text" id="expense-store" name="store" placeholder="Enter store name" required>
 
-                <label for="expense-item">Item:</label>
-                <select id="expense-item" name="item" required>
-                    <option value="" disabled selected>Select an item from list</option>
-                </select>
+                    <label for="expense-item">Item:</label>
+                    <input type="text" id="expense-item" name="item" placeholder="Enter item name" required>
 
-                <label for="expense-quantity">Quantity:</label>
-                <input type="number" id="expense-quantity" name="quantity" min="1" required>
+                    <label for="expense-quantity">Quantity:</label>
+                    <input type="number" id="expense-quantity" name="quantity" min="1" required>
 
-                <label for="expense-price">Price (CAD):</label>
-                <input type="number" id="expense-price" name="price" step="0.01" required>
+                    <label for="expense-price">Price (CAD):</label>
+                    <input type="number" id="expense-price" name="price" step="0.01" required>
 
-                <label for="expense-bucket">Expense Bucket:</label>
-                <input type="text" id="expense-bucket" name="bucket" required>
+                    <label for="expense-bucket">Expense Bucket:</label>
+                    <input type="text" id="expense-bucket" name="bucket" placeholder="e.g., Food, Transport" required>
 
-                <button type="button" id="add-expense-button">Add Expense</button>
+                    <button type="button" id="add-expense-button">Add Expense</button>
+                </form>
+            </div>
+
+            <div class="expense-display">
+                <h2>Expense Summary</h2>
+                <div id="expense-list">
+                    <h3>Expenses</h3>
+                    <p>No expenses added yet.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="budget-management">
+            <h2>Budget Overview</h2>
+            <p>Track your monthly budget and spending.</p>
+            <div class="budget-summary">
+                <p>Total Budget: <span id="total-budget">CAD 0.00</span></p>
+                <p>Total Expenses: <span id="total-expenses">CAD 0.00</span></p>
+                <p>Remaining Budget: <span id="remaining-budget">CAD 0.00</span></p>
+            </div>
+        </section>
+
+        <section id="savings-goals">
+            <h2>Savings Goals</h2>
+            <p>Set and track your savings goals.</p>
+            <form id="savings-form">
+                <label for="goal-name">Goal Name:</label>
+                <input type="text" id="goal-name" name="goal-name" placeholder="e.g., Vacation, Emergency Fund" required>
+
+                <label for="goal-amount">Goal Amount (CAD):</label>
+                <input type="number" id="goal-amount" name="goal-amount" step="0.01" required>
+
+                <button type="button" id="add-goal-button">Add Goal</button>
             </form>
-
-            <div id="expense-list">
-                <h3>Expenses</h3>
-                Expenses will be dynamically loaded here
+            <div id="goal-list">
+                <h3>Your Goals</h3>
+                <p>No goals added yet.</p>
             </div>
         </section>
     </main>
-    <footer>
+    <footer class="dashboard-footer">
         <p>&copy; 2025 Servizodobre. All rights reserved.</p>
     </footer>
     <script src="/frontend/static/js/profile.js"></script>
