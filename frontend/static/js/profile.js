@@ -73,7 +73,7 @@ const fetchExpenses = () => {
     const expenseList = document.getElementById('expense-list');
     expenseList.innerHTML = '<p>Loading expenses...</p>'; // Show loading message
 
-    fetch('http://127.0.0.1:5000/expenses') // Replace with your backend endpoint
+    fetch('http://127.0.0.1:5000/expense/expenses') // Replace with your backend endpoint
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -127,7 +127,7 @@ document.getElementById('add-expense-button').addEventListener('click', () => {
     }
 
     if (date && store && item && quantity && price && bucket && total && username) {
-        fetch('http://127.0.0.1:5000/add_expense', {
+        fetch('http://127.0.0.1:5000/expense/add_expense', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

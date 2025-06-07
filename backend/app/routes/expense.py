@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from app.database import get_db_connection
 
 expense_bp = Blueprint('expense', __name__)
@@ -16,4 +16,43 @@ def get_items():
     items = conn.execute('SELECT name FROM items').fetchall()
     conn.close()
     return jsonify({"items": [dict(item) for item in items]})
+
+@expense_bp.route('/expenses', methods=['GET'])
+def get_expenses():
+    user_name = request.args.get('user')
+    if not user_name:
+        return jsonify({'error': 'User is required'}), 400
+    conn = get_db_connection()
+    expenses = conn.execute('SELECT * FROM expenses WHERE user_name = ?', (user_name,)).fetchall()
+    conn.close()
+    expenses = [dict(expense) for expense in expenses]
+    return jsonify(expenses=expenses)
+
+@expense_bp.route('/add_expense', methods=['POST'])
+def add_expense():
+    data = request.get_json()
+    date = data.get('date')
+    store_name = data.get('store')
+    item_name = data.get('item')
+    quantity = data.get('quantity')
+    price = data.get('price')
+    total = data.get('total')
+    bucket = data.get('bucket')
+    user_name = data.get('user')
+
+    if not all([date, store_name, item_name, quantity, price, total, bucket, user_name]):
+        return jsonify({'error': 'All fields are required'}), 400
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            'INSERT INTO expenses (user_name, date, store_name, item_name, quantity, price, total, bucket) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            (user_name, date, store_name, item_name, quantity, price, total, bucket)
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({'message': 'Expense added successfully!'})
+    except Exception as e:
+        return jsonify({'error': f'An error occurred while adding the expense: {str(e)}'}), 500
 
