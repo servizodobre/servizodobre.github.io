@@ -56,3 +56,48 @@ def add_expense():
     except Exception as e:
         return jsonify({'error': f'An error occurred while adding the expense: {str(e)}'}), 500
 
+@expense_bp.route('/edit_expense', methods=['PUT'])
+def edit_expense():
+    data = request.get_json()
+    expense_id = data.get('id')
+    date = data.get('date')
+    store_name = data.get('store')
+    item_name = data.get('item')
+    quantity = data.get('quantity')
+    price = data.get('price')
+    total = data.get('total')
+    bucket = data.get('bucket')
+    user_name = data.get('user')
+
+    if not expense_id:
+        return jsonify({'error': 'Expense ID is required'}), 400
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            '''UPDATE expenses SET date=?, store_name=?, item_name=?, quantity=?, price=?, total=?, bucket=?, user_name=? WHERE id=?''',
+            (date, store_name, item_name, quantity, price, total, bucket, user_name, expense_id)
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({'message': 'Expense updated successfully!'})
+    except Exception as e:
+        return jsonify({'error': f'An error occurred while updating the expense: {str(e)}'}), 500
+
+@expense_bp.route('/delete_expense', methods=['DELETE'])
+def delete_expense():
+    data = request.get_json()
+    expense_id = data.get('id')
+    if not expense_id:
+        return jsonify({'error': 'Expense ID is required'}), 400
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM expenses WHERE id=?', (expense_id,))
+        conn.commit()
+        conn.close()
+        return jsonify({'message': 'Expense deleted successfully!'})
+    except Exception as e:
+        return jsonify({'error': f'An error occurred while deleting the expense: {str(e)}'}), 500
+

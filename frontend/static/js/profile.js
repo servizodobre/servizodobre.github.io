@@ -97,11 +97,12 @@ const fetchExpenses = () => {
                             <th>Price (CAD)</th>
                             <th>Total (CAD)</th>
                             <th>Bucket</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        ${data.expenses.map(expense => `
-                            <tr>
+                        ${data.expenses.map((expense, idx) => `
+                            <tr data-expense-id="${expense.id}">
                                 <td>${expense.date}</td>
                                 <td>${expense.store_name}</td>
                                 <td>${expense.item_name}</td>
@@ -109,11 +110,53 @@ const fetchExpenses = () => {
                                 <td>${parseFloat(expense.price).toFixed(2)}</td>
                                 <td>${parseFloat(expense.total).toFixed(2)}</td>
                                 <td>${expense.bucket}</td>
+                                <td>
+                                    <img src="/frontend/static/images/edit-button.png" alt="Edit" class="edit-expense-btn" style="width:20px;cursor:pointer;margin-right:8px;" data-idx="${idx}" />
+                                    <img src="/frontend/static/images/delete-button.png" alt="Delete" class="delete-expense-btn" style="width:20px;cursor:pointer;" data-id="${expense.id}" />
+                                </td>
                             </tr>
                         `).join('')}
                     </tbody>
                 `;
                 expenseList.appendChild(table);
+
+                // Add event listeners for edit and delete buttons
+                table.querySelectorAll('.edit-expense-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const row = this.closest('tr');
+                        const idx = this.getAttribute('data-idx');
+                        const expense = data.expenses[idx];
+                        // Populate form fields for editing
+                        document.getElementById('expense-date').value = expense.date;
+                        document.getElementById('expense-store').value = expense.store_name;
+                        document.getElementById('expense-item').value = expense.item_name;
+                        document.getElementById('expense-quantity').value = expense.quantity;
+                        document.getElementById('expense-price').value = expense.price;
+                        document.getElementById('expense-total').value = expense.total;
+                        document.getElementById('expense-bucket').value = expense.bucket;
+                        // Store editing id in a hidden field or variable
+                        document.getElementById('add-expense-button').textContent = 'Update Expense';
+                        document.getElementById('add-expense-button').setAttribute('data-edit-id', expense.id);
+                    });
+                });
+                table.querySelectorAll('.delete-expense-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const expenseId = this.getAttribute('data-id');
+                        if (confirm('Are you sure you want to delete this expense?')) {
+                            fetch(`http://127.0.0.1:5000/expense/delete_expense`, {
+                                method: 'DELETE',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ id: expenseId })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                alert(data.message || 'Expense deleted!');
+                                fetchExpenses();
+                            })
+                            .catch(err => alert('Error deleting expense.'));
+                        }
+                    });
+                });
             } else {
                 expenseList.innerHTML = '<p>No expenses added yet.</p>';
             }
@@ -125,7 +168,8 @@ const fetchExpenses = () => {
 };
 
 // Add new expense
-document.getElementById('add-expense-button').addEventListener('click', () => {
+const addExpenseBtn = document.getElementById('add-expense-button');
+addExpenseBtn.addEventListener('click', () => {
     const date = document.getElementById('expense-date').value;
     const store = document.getElementById('expense-store').value;
     const item = document.getElementById('expense-item').value;
@@ -143,30 +187,51 @@ document.getElementById('add-expense-button').addEventListener('click', () => {
         }
     }
 
-    if (date && store && item && quantity && price && bucket && total && username) {
-        fetch('http://127.0.0.1:5000/expense/add_expense', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ date, store, item, quantity, price, bucket, total, user: username }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                alert(data.message || 'Expense added successfully!');
-                fetchExpenses(); // Refresh the expense list
+    const editId = addExpenseBtn.getAttribute('data-edit-id');
+    if (editId) {
+        // Update existing expense
+        fetch('http://127.0.0.1:5000/expense/edit_expense', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: editId, date, store, item, quantity, price, bucket, total, user: username
             })
-            .catch((error) => {
-                console.error('Error adding expense:', error);
-            });
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.message || 'Expense updated!');
+            addExpenseBtn.textContent = 'Add Expense';
+            addExpenseBtn.removeAttribute('data-edit-id');
+            fetchExpenses();
+        })
+        .catch(err => alert('Error updating expense.'));
     } else {
-        alert('All fields are required to add an expense.');
+        if (date && store && item && quantity && price && bucket && total && username) {
+            fetch('http://127.0.0.1:5000/expense/add_expense', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ date, store, item, quantity, price, bucket, total, user: username }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert(data.message || 'Expense added successfully!');
+                    fetchExpenses(); // Refresh the expense list
+                })
+                .catch((error) => {
+                    console.error('Error adding expense:', error);
+                });
+        } else {
+            alert('All fields are required to add an expense.');
+        }
     }
 });
 
 // Initial fetches
 fetchStores();
 fetchItems();
+fetchExpenses();
 
 function updateTotal(quantityField, priceField, totalField) {
     const quantity = parseFloat(quantityField.value) || 0;
