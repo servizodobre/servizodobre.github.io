@@ -84,19 +84,36 @@ const fetchExpenses = () => {
             expenseList.innerHTML = ''; // Clear loading message
 
             if (data.expenses && data.expenses.length > 0) {
-                data.expenses.forEach((expense) => {
-                    const expenseItem = document.createElement('div');
-                    expenseItem.className = 'expense-item';
-                    expenseItem.innerHTML = `
-                        <p><strong>Date:</strong> ${expense.date}</p>
-                        <p><strong>Store:</strong> ${expense.store}</p>
-                        <p><strong>Item:</strong> ${expense.item}</p>
-                        <p><strong>Quantity:</strong> ${expense.quantity}</p>
-                        <p><strong>Price:</strong> CAD ${expense.price.toFixed(2)}</p>
-                        <p><strong>Bucket:</strong> ${expense.bucket}</p>
-                    `;
-                    expenseList.appendChild(expenseItem);
-                });
+                // Create table
+                const table = document.createElement('table');
+                table.className = 'expense-summary-table';
+                table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Store</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Price (CAD)</th>
+                            <th>Total (CAD)</th>
+                            <th>Bucket</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.expenses.map(expense => `
+                            <tr>
+                                <td>${expense.date}</td>
+                                <td>${expense.store_name}</td>
+                                <td>${expense.item_name}</td>
+                                <td>${expense.quantity}</td>
+                                <td>${parseFloat(expense.price).toFixed(2)}</td>
+                                <td>${parseFloat(expense.total).toFixed(2)}</td>
+                                <td>${expense.bucket}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                `;
+                expenseList.appendChild(table);
             } else {
                 expenseList.innerHTML = '<p>No expenses added yet.</p>';
             }
