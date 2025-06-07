@@ -115,14 +115,24 @@ document.getElementById('add-expense-button').addEventListener('click', () => {
     const quantity = parseInt(document.getElementById('expense-quantity').value, 10);
     const price = parseFloat(document.getElementById('expense-price').value).toFixed(2);
     const bucket = document.getElementById('expense-bucket').value;
+    const total = document.getElementById('expense-total').value;
+    // Get username from welcome section or localStorage
+    let username = localStorage.getItem('username');
+    if (!username) {
+        // Try to get from welcome message if not in localStorage
+        const welcomeMessage = document.getElementById('welcome-message');
+        if (welcomeMessage && welcomeMessage.textContent) {
+            username = welcomeMessage.textContent.split("'s dashboard")[0];
+        }
+    }
 
-    if (date && store && item && quantity && price && bucket) {
+    if (date && store && item && quantity && price && bucket && total && username) {
         fetch('http://127.0.0.1:5000/add_expense', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ date, store, item, quantity, price, bucket }),
+            body: JSON.stringify({ date, store, item, quantity, price, bucket, total, user: username }),
         })
             .then((response) => response.json())
             .then((data) => {
