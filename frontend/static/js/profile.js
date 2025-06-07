@@ -71,9 +71,9 @@ function fetchItems() {
 // Fetch and display expenses
 const fetchExpenses = () => {
     const expenseList = document.getElementById('expense-list');
-    expenseList.innerHTML = '<p>Loading expenses...</p>'; // Show loading message
-
-    fetch('http://127.0.0.1:5000/expense/expenses') // Replace with your backend endpoint
+    expenseList.innerHTML = '<p>Loading expenses...</p>';
+    const username = localStorage.getItem('username');
+    fetch(`http://127.0.0.1:5000/expense/expenses?user=${encodeURIComponent(username)}`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
