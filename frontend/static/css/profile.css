@@ -16,7 +16,7 @@
 }
 
 /* Apply the same font throughout the page */
-body, input, button, p, h1, label, section, h2 {
+body, input, button, p, h1, label, section, h2, form {
     font-family: var(--font-family);
 }
 
@@ -76,18 +76,16 @@ section {
 */
 
 #expense-management {
-    display: grid; /* Use flexbox for horizontal alignment */
-    flex-direction: row; /* Align sections side by side */
+    display: grid; /* Use grid layout */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
     gap: 20px; /* Add spacing between the sections */
     width: 100%; /* Match the width of the banner */
     max-width: 1200px; /* Same as the banner's max width */
     margin: 0 auto; /* Center the section horizontally */
     padding: 20px; /* Add padding for better spacing */
-    justify-content: space-between; /* Ensure sections take up the full width */
 }
 
 .expense-entry, .expense-display {
-    flex: 1; /* Ensure both sections take up equal space */
     background-color: #f1f1f1;
     padding: 20px;
     border-radius: 8px;
@@ -184,4 +182,11 @@ footer {
 
 .profile-actions button:hover {
     background-color: #005bb5;
+}
+
+/* Style the default value in dropdowns */
+select option[selected] {
+    font-family: var(--font-family); /* Use the same font as other elements */
+    font-size: 1rem; /* Ensure consistent font size */
+    color: var(--text-color); /* Use the same text color */
 }

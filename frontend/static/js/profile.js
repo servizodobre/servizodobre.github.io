@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Display welcome message
         const welcomeMessage = document.getElementById('welcome-message');
         //welcomeMessage.textContent = `Welcome, ${username}!`;
-        welcomeMessage.innerHTML = `${username}!'s`;
+        welcomeMessage.innerHTML = `${username}'s dashboard`;
 
         // Set default date to today
         const dateField = document.getElementById('expense-date');
