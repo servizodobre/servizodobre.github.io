@@ -64,17 +64,19 @@ section {
     padding: 20px;
 }
 
+/*
 #welcome-section {
     grid-column: span 2;
     text-align: center;
     /* background-color: var(--secondary-color);
-    color: white; */
+    color: white; *
     padding: 20px;
     border-radius: 8px;
 }
+*/
 
 #expense-management {
-    display: flex; /* Use flexbox for horizontal alignment */
+    display: grid; /* Use flexbox for horizontal alignment */
     flex-direction: row; /* Align sections side by side */
     gap: 20px; /* Add spacing between the sections */
     width: 100%; /* Match the width of the banner */
