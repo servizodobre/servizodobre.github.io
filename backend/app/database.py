@@ -61,7 +61,7 @@ def init_db():
             type TEXT NOT NULL,
             amount REAL NOT NULL,
             description TEXT,
-            FOREIGN KEY (user_name) REFERENCES users (username),
+            FOREIGN KEY (user_name) REFERENCES users (username)
         )
     ''')
 
