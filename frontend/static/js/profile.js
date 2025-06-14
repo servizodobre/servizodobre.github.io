@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         quantityField.addEventListener('input', () => updateTotal(quantityField, priceField, totalField));
         priceField.addEventListener('input', () => updateTotal(quantityField, priceField, totalField));
+
+        // Fetch and display expenses
+        fetchExpenses(); // <-- Moved here, inside the else block
     }
 });
 
@@ -228,13 +231,9 @@ addExpenseBtn.addEventListener('click', () => {
     }
 });
 
-// Initial fetches
-fetchStores();
-fetchItems();
-fetchExpenses();
-
-function updateTotal(quantityField, priceField, totalField) {
-    const quantity = parseFloat(quantityField.value) || 0;
-    const price = parseFloat(priceField.value) || 0;
-    totalField.value = (quantity * price).toFixed(2);
-}
+// Remove the fetchStores(), fetchItems(), and fetchExpenses() calls from the bottom of the file
+ function updateTotal(quantityField, priceField, totalField) {
+     const quantity = parseFloat(quantityField.value) || 0;
+     const price = parseFloat(priceField.value) || 0;
+     totalField.value = (quantity * price).toFixed(2);
+ }
