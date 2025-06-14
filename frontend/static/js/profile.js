@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Fetch and display expenses
         fetchExpenses(); // <-- Moved here, inside the else block
+        // Fetch and display total cash income
+        fetchCashIncomeTotal();
     }
 });
 
@@ -235,3 +237,18 @@ addExpenseBtn.addEventListener('click', () => {
      const price = parseFloat(priceField.value) || 0;
      totalField.value = (quantity * price).toFixed(2);
  }
+
+function fetchCashIncomeTotal() {
+    fetch('http://127.0.0.1:5000/expense/income/total_cash')
+        .then(response => response.json())
+        .then(data => {
+            const total = data.total_cash_income || 0;
+            const cashIncomeSpan = document.getElementById('cash-income-total');
+            cashIncomeSpan.textContent = `Total: ${total >= 0 ? '+' : ''}${total.toFixed(2)} CAD`;
+            cashIncomeSpan.style.color = total >= 0 ? 'green' : 'red';
+        })
+        .catch(() => {
+            const cashIncomeSpan = document.getElementById('cash-income-total');
+            cashIncomeSpan.textContent = '';
+        });
+}

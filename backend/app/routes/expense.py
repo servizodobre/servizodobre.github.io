@@ -101,3 +101,16 @@ def delete_expense():
     except Exception as e:
         return jsonify({'error': f'An error occurred while deleting the expense: {str(e)}'}), 500
 
+@expense_bp.route('/income/total_cash', methods=['GET'])
+def get_total_cash_income():
+    conn = get_db_connection()
+    result = conn.execute("""
+        SELECT 
+            IFNULL((SELECT SUM(amount) FROM income WHERE type = 'cash'), 0) - 
+            IFNULL((SELECT SUM(total) FROM expenses WHERE bucket = 'Cash'), 0) 
+            AS total
+    """).fetchone()
+    conn.close()
+    total = result['total'] if result['total'] is not None else 0
+    return jsonify({'total_cash_income': total})
+
