@@ -106,7 +106,7 @@ def get_total_cash_income():
     conn = get_db_connection()
     result = conn.execute("""
         SELECT 
-            IFNULL((SELECT SUM(amount) FROM income WHERE type = 'cash'), 0) - 
+            IFNULL((SELECT SUM(amount) FROM income WHERE type = 'Cash'), 0) - 
             IFNULL((SELECT SUM(total) FROM expenses WHERE bucket = 'Cash'), 0) 
             AS total
     """).fetchone()

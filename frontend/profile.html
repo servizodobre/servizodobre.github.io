@@ -37,25 +37,20 @@
                         <select id="expense-store" name="store" required>
                             <option value="" disabled selected>Select a store</option>
                         </select>
-                    </div>
-
-                    <div class="form-row">
                         <label for="expense-item">Item</label>
                         <select id="expense-item" name="item" required>
                             <option value="" disabled selected>Select an item</option>
                         </select>
-                        <label for="expense-quantity">Quantity</label>
-                        <input type="number" id="expense-quantity" name="quantity" value="1" min="1" required>
                     </div>
 
                     <div class="form-row">
-                        
+                        <label for="expense-quantity">Quantity</label>
+                        <input type="number" id="expense-quantity" name="quantity" value="1" min="1" required>
                         <label for="expense-price">Price</label>
-                        <div style="display: flex; align-items: center; gap: 4px;">
-                            <input type="number" id="expense-price" name="price" step="0.01" required>
-                            <span>CAD</span>
-                        </div>
+                        <input type="number" id="expense-price" name="price" step="0.01" required>
+                    </div>
 
+                    <div class="form-row">
                         <label for="expense-total">Total</label>
                         <input type="number" id="expense-total" name="total" readonly>
                     </div>
