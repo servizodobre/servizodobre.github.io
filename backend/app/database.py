@@ -53,6 +53,14 @@ def init_db():
             FOREIGN KEY (item_name) REFERENCES items (name)
         )
     ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS income (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date TEXT NOT NULL,
+            type TEXT NOT NULL,
+            amount REAL NOT NULL
+        )
+    ''')
 
     conn.commit()
     conn.close()

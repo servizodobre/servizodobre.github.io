@@ -202,7 +202,6 @@ addExpenseBtn.addEventListener('click', () => {
         })
         .then(res => res.json())
         .then(data => {
-            alert(data.message || 'Expense updated!');
             addExpenseBtn.textContent = 'Add Expense';
             addExpenseBtn.removeAttribute('data-edit-id');
             fetchExpenses();
@@ -219,7 +218,6 @@ addExpenseBtn.addEventListener('click', () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    alert(data.message || 'Expense added successfully!');
                     fetchExpenses(); // Refresh the expense list
                 })
                 .catch((error) => {
