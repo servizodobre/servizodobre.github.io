@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchExpenses(); // <-- Moved here, inside the else block
         // Fetch and display total cash income
         fetchCashIncomeTotal();
+        fetchCashExpenseTotal();
     }
 });
 
@@ -246,6 +247,21 @@ function fetchCashIncomeTotal() {
             const cashIncomeSpan = document.getElementById('cash-income-total');
             cashIncomeSpan.textContent = `Total: ${total >= 0 ? '+' : ''}${total.toFixed(2)} CAD`;
             cashIncomeSpan.style.color = total >= 0 ? 'green' : 'red';
+        })
+        .catch(() => {
+            const cashIncomeSpan = document.getElementById('cash-income-total');
+            cashIncomeSpan.textContent = '';
+        });
+}
+
+function fetchCashExpenseTotal() {
+    fetch('http://127.0.0.1:5000/expense/total_cash_expense')
+        .then(response => response.json())
+        .then(data => {
+            const total = data.total_cash_income || 0;
+            const cashIncomeSpan = document.getElementById('cash-expense-total');
+            cashIncomeSpan.textContent = `Total: ${'-'}${total.toFixed(2)} CAD`;
+            cashIncomeSpan.style.color = 'red';
         })
         .catch(() => {
             const cashIncomeSpan = document.getElementById('cash-income-total');

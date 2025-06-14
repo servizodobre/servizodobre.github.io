@@ -114,3 +114,15 @@ def get_total_cash_income():
     total = result['total'] if result['total'] is not None else 0
     return jsonify({'total_cash_income': total})
 
+@expense_bp.route('/total_cash_expense', methods=['GET'])
+def get_total_cash_income():
+    conn = get_db_connection()
+    result = conn.execute("""
+        SELECT 
+            IFNULL((SELECT SUM(total) FROM expenses WHERE bucket = 'Cash'), 0) 
+            AS total
+    """).fetchone()
+    conn.close()
+    total = result['total'] if result['total'] is not None else 0
+    return jsonify({'total_cash_expense': total})
+
