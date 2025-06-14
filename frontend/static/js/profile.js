@@ -158,6 +158,7 @@ const fetchExpenses = () => {
                             .then(data => {
                                 alert(data.message || 'Expense deleted!');
                                 fetchExpenses();
+                                fetchCashExpenseTotal(); // Add this line
                             })
                             .catch(err => alert('Error deleting expense.'));
                         }
