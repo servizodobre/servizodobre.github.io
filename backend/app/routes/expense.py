@@ -115,7 +115,7 @@ def get_total_cash_income():
     return jsonify({'total_cash_income': total})
 
 @expense_bp.route('/total_cash_expense', methods=['GET'])
-def get_total_cash_income():
+def get_total_cash_expense():
     conn = get_db_connection()
     result = conn.execute("""
         SELECT 
