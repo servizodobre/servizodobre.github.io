@@ -40,7 +40,7 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS expenses (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_name INTEGER NOT NULL,
+            user_name TEXT NOT NULL,
             date TEXT NOT NULL,
             store_name INTEGER NOT NULL,
             item_name INTEGER NOT NULL,
@@ -56,9 +56,12 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS income (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_name TEXT NOT NULL,
             date TEXT NOT NULL,
             type TEXT NOT NULL,
-            amount REAL NOT NULL
+            amount REAL NOT NULL,
+            description TEXT,
+            FOREIGN KEY (user_name) REFERENCES users (username),
         )
     ''')
 
